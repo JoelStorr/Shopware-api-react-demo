@@ -1,4 +1,48 @@
-.mainHeader{
+.header--mainHeader{
     background-color: white;
-    color:red;
+    color:rgb(54, 54, 54);
+    position: absolute;
+    top:0rem;
+    left: 0rem;
+    width: 100%;
+    
+
+    .header--companyName{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+
+        .header--searchContainer{
+            width: 500px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgb(45,45,45);
+            border: 1px solid rgb(54, 54, 54);
+            border-radius: 5px;
+        }
+
+    }
+
+    .header--signin{
+
+        display: flex;
+
+        button{
+            background-color: rgba($color: #000000, $alpha: 0.0);
+            color: rgb(54,54,54); 
+            border: rgb(54,54,54) solid 1px;
+            margin: 1rem;
+            transition: all 0.5s ease-in-out;
+
+            &:hover{
+                color: #fff;
+                background-color: rgb(54, 54, 54);
+            }
+        
+        }
+    }
+    
 }

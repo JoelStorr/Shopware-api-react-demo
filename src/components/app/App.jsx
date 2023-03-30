@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import reactLogo from './../../assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.scss'
-import Navigation from '../Header/nav/Navigation'
+
+import MainHeader from '../Header/Header'
 
 import axios from 'axios'
 
@@ -13,7 +14,7 @@ function App() {
   return (
     <div className="App">
 
-    <Navigation />
+      <MainHeader />
 
     </div>
   )

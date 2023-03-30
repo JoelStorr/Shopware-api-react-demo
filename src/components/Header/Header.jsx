@@ -11,17 +11,21 @@ export default function MainHeader(){
 
 
     return(
-        <div className='mainHeader'>
-        <div className='CompName'>
-            <h1>Logo Placeholder</h1>
-            <p>Search PlaceHolder</p>
-            <div>
-                <p>LogIn</p>
-                <p>Register</p>
-            </div> 
+        <div className='header--mainHeader'>
+            <div className='header--companyName'>
+                <h1>Logo Placeholder</h1>
+                <div class="header--searchContainer">
+                    <p>Search PlaceHolder</p>
 
-        </div>
+                </div>
+                <div className="header--signin">
+                    <button>LogIn</button>
+                    <button>Register</button>
+                </div> 
 
+            </div>
+        <Navigation />
+        
 
         </div>
 
