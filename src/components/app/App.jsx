@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import reactLogo from './../../assets/react.svg'
 import viteLogo from '/vite.svg'
-import './App.css'
-import Navigation from '../nav/Navigation'
+import './App.scss'
+import Navigation from '../Header/nav/Navigation'
 
 import axios from 'axios'
 

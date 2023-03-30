@@ -13,6 +13,7 @@ export default function Navigation(){
         apiVal();
       }, []);
 
+      //NOTE: Change API Key
       const apiVal = () => {
         axios({
           method: "post",
