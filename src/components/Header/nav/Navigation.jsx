@@ -42,49 +42,73 @@ export default function Navigation(){
 
       function orderNav(queryResElemetns){
         
-      
+        const tempCategories = []
 
         queryResElemetns.forEach(element => {
-          console.info(element);
+          //console.info(element);
 
-          if(
-              element.parentId === null 
-              && !categories.some(ele => element.name == ele.parent.name)
-            ){
-              console.log('Is base element');
-            setCategories(prevState => [...prevState, element]);
+          if (
+            element.parentId === null &&
+            !tempCategories.some((ele) => element.name == ele.parent.name)
+          ) {
+
+            console.log('Is base element');
+
+            const categoryConversionObject = { parent: element, children: [] };
+
+            tempCategories.push(categoryConversionObject);
+            console.info(tempCategories)
+
+          } else if (element.parentId != null && tempCategories.length > 0) {
+
+
+
+            const parent = tempCategories.find(
+              (ele) => {
+                
+                  return ele.parent.id == element.parentId
+              }
+            );
+
+              console.log(parent);
+
+              parent.children.push(element);
+            
+
           }
 
+          // TODO: Reorder Children based on ID
           
-
-
-      /*     if(element.parentId === null){
-            setCategories(()=>{categories.push({ parent: element, children: [] });})
-          }else{
-            if(categories.length < 1 ){
-              console.error('Something whent wrong when fetching Parent Data');
-              return;
-            }
-            let parentCategorei = categories.find(ele => ele.id === element.parentId);
-            if(parentCategorei){
-              parentCategorei.children.push(element);
-            }
-          } */
-
       
         });
 
-
+        setCategories(tempCategories);
     
+        console.log("Temp Array", tempCategories);
 
       }
 
-        console.log("State Array", categories);
         
 
     return(
         <ul>
-           
+           {categories.map((el)=>{
+            return(
+              <li key={el.parent.id}>
+                <p>
+                  {el.parent.name}
+                </p>
+                  <ul>
+                    {el.children.map((childEl)=>{
+                      return(
+                        <li>{childEl.name}</li>
+                      )
+                    })}
+                  </ul>
+
+              </li>
+            )
+           })}
         </ul>
     )
 
