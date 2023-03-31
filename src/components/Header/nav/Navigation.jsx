@@ -11,11 +11,17 @@ export default function Navigation(){
       const [dataLoaded, setDataLoaded] = useState(false);
       const [categories, setCategories] = useState([]);
 
+    let data = null;
+
       useEffect(() => {
-        if(!dataLoaded){
+       /*  if(!dataLoaded){
           apiVal();
           setDataLoaded(true)
-        }
+        } */
+
+        setCategories([]);
+       apiVal();
+
       }, []);
 
       //NOTE: Change API Key
@@ -26,6 +32,7 @@ export default function Navigation(){
           headers: { "sw-access-key": "SWSCWDHDQLQ4UM9YZZZIEUXLBQ" },
         }).then((res) => {
           console.log(res.data.elements);
+          setCategories([]);
           orderNav(res.data.elements);
         });
       };
@@ -40,12 +47,15 @@ export default function Navigation(){
         queryResElemetns.forEach(element => {
           console.info(element);
 
-          if(element.parentId == null){
-            setCategories(() => {
-              categories.push({ parent: element, children: [] });
-            });
+          if(
+              element.parentId === null 
+              && !categories.some(ele => element.name == ele.parent.name)
+            ){
+              console.log('Is base element');
+            setCategories(prevState => [...prevState, element]);
           }
 
+          
 
 
       /*     if(element.parentId === null){
@@ -65,9 +75,12 @@ export default function Navigation(){
         });
 
 
-        console.log(categories);
+    
 
       }
+
+        console.log("State Array", categories);
+        
 
     return(
         <ul>
