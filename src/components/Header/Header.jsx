@@ -14,7 +14,7 @@ export default function MainHeader(){
         <div className='header--mainHeader'>
             <div className='header--companyName'>
                 <h1>Logo Placeholder</h1>
-                <div class="header--searchContainer">
+                <div className="header--searchContainer">
                     <p>Search PlaceHolder</p>
 
                 </div>
