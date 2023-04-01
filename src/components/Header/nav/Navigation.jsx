@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
-
 import axios from "axios";
+
+import './Navigation.scss';
 
 export default function Navigation() {
   const shopwareDomain = "http://localhost/store-api/";
   const [fetchedData, setFetchedData] = useState(false);
   const [sortedSub, setSortedSub] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [isHovering, setIsHovering] = useState(false);
+  const [endOfDemo, setEndOfDemo] = useState(false)
 
   let data = null;
 
@@ -123,20 +126,73 @@ export default function Navigation() {
   }
 
 
+ function handleMouseOver(el){
+    setIsHovering(el.parent.id);
+  }
+
+  function handleMouseOut (el){
+    setIsHovering(false);
+  }
+
+
+
+ //TODO: Match the CLiked ID of Subcategoreis to the Coresponding Portion of the 3D view
+  function onClickHandler(el){
+    console.log(el);
+
+    if(el.parentId != categories[0].parent.id){
+      console.log('This is not part of the Demo');
+      setEndOfDemo(true);
+    }
+
+  
+  }
   return (
-    <ul>
+    <>
+    <ul className="header--nav--mainCategoriesList">
       {sortedSub && categories.map((el) => {
         return (
-          <li key={el.parent.id}>
+          <li
+            key={el.parent.id}
+            className="header--nav--mainCategories"
+            onMouseOver={() => handleMouseOver(el)}
+            onMouseOut={() => handleMouseOut(el)}
+          >
             <p>{el.parent.name}</p>
-            <ul>
-              {el.children.map((childEl) => {
-                return <li key={childEl.id}>{childEl.name}</li>;
-              })}
-            </ul>
+
+            {el.parent.id === isHovering ? (
+              <ul
+                className="header--nav--subcategoriesList"
+              >
+                {el.children.map((childEl) => {
+                  return (
+                    <li
+                      key={childEl.id}
+                      className="header--nav--subCategories "
+                      onClick={() => onClickHandler(childEl)}
+                    >
+                      {childEl.name}
+                    </li>
+                  );
+                })}
+              </ul>
+            ) : (
+              ""
+            )}
           </li>
         );
       })}
     </ul>
+
+    {endOfDemo &&(
+      <div className="header--endDemoPopUp" onClick={()=>setEndOfDemo(false)}>
+        <div>
+          <h1>This is the End of the Demo</h1>
+          <h3>For this demo only {categories[0].parent.name} was implementd</h3>
+          <p>Click any where to return</p>
+        </div>
+      </div>
+    )}
+    </>
   );
 }
