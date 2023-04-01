@@ -7,19 +7,23 @@ import MainHeader from '../Header/Header'
 
 import axios from 'axios'
 import Main from '../Main/Main'
+import { Canvas } from '@react-three/fiber'
 
 function App() {
   const [count, setCount] = useState(0)
 
 
   return (
-    <div className="App">
-
-      <MainHeader />
-      <Main />
-
-    </div>
-  )
+    <>
+          <MainHeader />
+          <div className='renderBox'>
+           <Canvas>
+              <Main />
+           </Canvas>
+          </div>
+    </>
+    
+  );
 }
 
 export default App

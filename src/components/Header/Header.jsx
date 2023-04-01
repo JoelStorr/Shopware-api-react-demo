@@ -25,7 +25,6 @@ export default function MainHeader(){
 
             </div>
             <Navigation />
-        
 
         </div>
 
