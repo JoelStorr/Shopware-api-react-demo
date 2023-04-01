@@ -6,6 +6,7 @@ import './App.scss'
 import MainHeader from '../Header/Header'
 
 import axios from 'axios'
+import Main from '../Main/Main'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -15,6 +16,7 @@ function App() {
     <div className="App">
 
       <MainHeader />
+      <Main />
 
     </div>
   )

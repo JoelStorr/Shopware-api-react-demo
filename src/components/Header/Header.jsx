@@ -24,7 +24,7 @@ export default function MainHeader(){
                 </div> 
 
             </div>
-        <Navigation />
+            <Navigation />
         
 
         </div>
