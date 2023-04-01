@@ -28,26 +28,42 @@
         &:hover{
             text-decoration: underline;
             color:rgb(13, 128, 128);
+            cursor: pointer;
         }
 
        
     }
 }
+.header--nav--active{
+    text-decoration: underline;
+    color:rgb(13, 128, 128);
 
+    p{
+         color:rgb(13, 128, 128);
+    }
+}
 
 .header--nav--subcategoriesList{
     z-index: 2;
     position: absolute;
     background-color: white;
     color: rgb(52,52,52,);
-
-   
+    padding: 1rem;
+   width: 15rem;
 
 }
 
 .header--nav--subCategories{
+    align-items: center;
+    padding: 1.5rem;
+    list-style: none;
+    list-style-type: none;
+
+
      &:hover{
         color: rgb(13, 128, 128);
+        text-decoration: underline;
+       cursor: pointer;
     }
 }
 

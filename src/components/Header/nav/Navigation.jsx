@@ -154,16 +154,18 @@ export default function Navigation() {
         return (
           <li
             key={el.parent.id}
-            className="header--nav--mainCategories"
+            className={
+              el.parent.id === isHovering
+                ? "header--nav--mainCategories header--nav--active"
+                : "header--nav--mainCategories"
+            }
             onMouseOver={() => handleMouseOver(el)}
             onMouseOut={() => handleMouseOut(el)}
           >
             <p>{el.parent.name}</p>
 
             {el.parent.id === isHovering ? (
-              <ul
-                className="header--nav--subcategoriesList"
-              >
+              <ul className="header--nav--subcategoriesList">
                 {el.children.map((childEl) => {
                   return (
                     <li
