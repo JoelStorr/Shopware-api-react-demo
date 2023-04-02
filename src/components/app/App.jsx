@@ -17,7 +17,7 @@ function App() {
     <>
           <MainHeader />
           <div className='renderBox'>
-           <Canvas>
+           <Canvas styles={{width: '100%', height: '100%'}}>
               <Main />
            </Canvas>
           </div>
