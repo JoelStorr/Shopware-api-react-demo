@@ -1,6 +1,7 @@
 // Modules
 import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
 
 
 // Custom
@@ -17,6 +18,7 @@ function App() {
           <MainHeader />
           <div className='renderBox'>
            <Canvas >
+              <OrbitControls />
               <Main />
            </Canvas>
           </div>
