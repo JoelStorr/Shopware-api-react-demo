@@ -9,6 +9,7 @@ import {useControls} from 'leva';
 import './App.scss'
 import MainHeader from '../Header/Header'
 import Main from '../Main/Main'
+import { Camera } from 'three';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,8 +21,9 @@ function App() {
     <>
           <MainHeader />
           <div className='renderBox'>
-           <Canvas >
+           <Canvas camera={{position:[-1.5,1.5,-2.5]}} >
            {orbitControls && (<OrbitControls />)}
+              
               <Main />
            </Canvas>
           </div>
