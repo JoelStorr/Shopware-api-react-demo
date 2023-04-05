@@ -30,21 +30,21 @@ function App() {
             <Main />
             <Scroll></Scroll>
             <Scroll html>
-              <div 
-                id="wasserhahn"  
-                style={{position: 'absolute', top: '0vh', color: 'black'}}
-                >
-                  Wasserhan
-                </div>
-              <div 
-                id="handtuchhalter" 
-                style={{position: 'absolute', top: "100vh", color: 'black'}}
+              <div
+                id="wasserhahn"
+                style={{ position: "absolute", top: "0vh", color: "black" }}
               >
-                  handtuchhalter
+                Wasserhan
               </div>
-              <div 
-                id="harkensystem"
-                style={{position: 'absolute', top: '200vh', color: 'black'}}
+              <div
+                id="2c297ef976e741caa67787d93b405866"
+                style={{ position: "absolute", top: "100vh", color: "black" }}
+              >
+                handtuchhalter
+              </div>
+              <div
+                id="hakensysteme"
+                style={{ position: "absolute", top: "200vh", color: "black" }}
               >
                 harkensystem
               </div>

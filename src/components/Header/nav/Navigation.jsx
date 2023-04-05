@@ -136,6 +136,9 @@ export default function Navigation() {
 
 
 
+
+
+
  //TODO: Match the CLiked ID of Subcategoreis to the Coresponding Portion of the 3D view
   function onClickHandler(el){
     console.log(el);
@@ -143,10 +146,36 @@ export default function Navigation() {
     if(el.parentId != categories[0].parent.id){
       console.log('This is not part of the Demo');
       setEndOfDemo(true);
+      return
     }
 
-  
+
+    scrollTo(el.id);
+
   }
+
+    function scrollTo(id, isId = true) {
+      if (id[0] != "." && !isId) {
+        id = "." + id;
+        id = id.normalize()
+      } else if (id[0] != "#" && isId) {
+        id = "#" + id;
+        id = id.normalize();
+      }
+      const element = document.querySelector(id);
+      window.scrollTo({
+        top: element?.getBoundingClientRect().top,
+        left: 0,
+        behavior: "smooth",
+      });
+
+
+      console.log('Tried Scrolling')
+    }
+
+
+
+
   return (
     <>
     <ul className="header--nav--mainCategoriesList">
