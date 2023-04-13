@@ -1,7 +1,7 @@
 // Modules
 import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { Environment, OrbitControls } from '@react-three/drei'
 import {useControls} from 'leva';
 import { ScrollControls, Scroll } from '@react-three/drei';
 
@@ -25,8 +25,9 @@ function App() {
       <div className="renderBox">
         <Canvas camera={{ position: [-1.5, 1.5, -2.5] }}>
           {orbitControls && <OrbitControls />}
+          <Environment background={false} blur={0} path="/" preset="city"  />
 
-          <ScrollControls pages={4} damping={0.1} horizontal={false}>
+          <ScrollControls pages={4} damping={0} horizontal={false}>
             <Main />
             <Scroll></Scroll>
             <Scroll html>
