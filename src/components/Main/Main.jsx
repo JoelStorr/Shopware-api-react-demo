@@ -5,53 +5,53 @@ import { useGLTF, useHelper,  } from "@react-three/drei";
 //import * as THREE from 'three';
 import { PointLightHelper } from 'three/src/helpers/PointLightHelper';
 import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/all';
 
 
 import './Main.scss';
-import { useScroll } from '@react-three/drei';
+
+
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Main(props) {
   const { nodes, materials } = useGLTF("/src/assets/models/base-kitchen.glb");
-  const scroll = useScroll();
   const tl = useRef();
   const camera = useThree((state) => state.camera);
 
-  useFrame((state, delta) => {
-    const angle = state.clock.elapsedTime;
-    //state.camera.position.x = Math.sin(angle) * 8;
-    //state.camera.position.z = Math.cos(angle) * 8;
-    state.camera.lookAt(0, 1, 0);
 
-    tl.current.seek(scroll.offset * tl.current.duration());
-    console.log(scroll.offset * tl.current.duration());
-    /* console.log(state.camera.position); */
-    //console.log(scroll.offset)
+  
+
+  useFrame((state, delta) => {
+    state.camera.lookAt(0, 1, 0);
+  /*   tl.current.seek(scroll.offset * tl.current.duration()); */
+  
   });
 
   useLayoutEffect(() => {
     tl.current = gsap.timeline({
-      defaults: { duration: 6, ease: "linear" },
+      defaults: { duration: 6, ease: "smooth" },
+      marker: true,
     });
 
     tl.current
-      /* .from(camera.position, { x: -1.5, y: 2.5, z: -2.5 }, 0)
-       */
+
+
       .to(camera.position, { x: 2.63, y: 1, z: 0.01 }, 2)
       .to(camera.position, { x: 2.63, y: 1, z: 0.01 }, 4)
       .to(camera.position, { x: 2.63, y: 1, z: 0.01 }, 6);
 
-    //console.log(camera.position);
+
   }, []);
 
 
-  const pointLight = useRef();
-  useHelper(pointLight, PointLightHelper, "red");
+
 
 
   return (
     <group {...props} dispose={null}>
   
-      <pointLight position={[-2, 4, 0]} intensity={.5} ref={pointLight}/>
+      <pointLight position={[-2, 4, 0]} intensity={.5} />
 
       <pointLight position={[-2, 0, 0]} intensity={.5}/>
       <mesh
