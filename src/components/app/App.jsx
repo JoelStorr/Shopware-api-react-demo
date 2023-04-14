@@ -25,10 +25,14 @@ function App() {
       <div className="renderBox">
         <Canvas camera={{ position: [-1.5, 1.5, -2.5] }}>
           {orbitControls && <OrbitControls />}
-          <Environment background={false} blur={0} path="/" preset="city"  />
-            <Main />
+          <Environment background={false} blur={0} path="/" preset="city" />
+          <Main />
         </Canvas>
       </div>
+      <div className="top-spacer"></div>
+      <div className="scroller box1" id="wasserhahn">Wasserhan</div>
+      <div className="scroller box2" id="2c297ef976e741caa67787d93b405866"> Handtuchhalter</div>
+      <div className="scroller box3" id="hakensysteme">Harkensystheme</div>
     </>
   );
 }
