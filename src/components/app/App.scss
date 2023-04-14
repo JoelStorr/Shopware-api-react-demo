@@ -14,11 +14,13 @@
   height: 100vh;
   width: 100%;
   background-color: aliceblue;
-  z-index: -1;
+  z-index: 0;
 }
 
 .scroller {
   min-height: 100vh;
+  pointer-events: none;
+  z-index: 2;
 }
 
 .box1 {
@@ -34,4 +36,6 @@
 .top-spacer{
   height: 80vh;
   background-color: rgba(226, 115, 10, 0.3);
+  pointer-events: none;
+  z-index: 2;
 }

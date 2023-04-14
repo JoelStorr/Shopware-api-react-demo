@@ -155,14 +155,9 @@ export default function Navigation() {
   }
 
     function scrollTo(id, isId = true) {
-      if (id[0] != "." && !isId) {
-        id = "." + id;
-        id = id.normalize()
-      } else if (id[0] != "#" && isId) {
-        id = "#" + id;
-        id = id.normalize();
-      }
-      const element = document.querySelector(id);
+    
+      const element = document.querySelector(`#shopId-${id}`);
+      console.log(element)
       window.scrollTo({
         top: element?.getBoundingClientRect().top,
         left: 0,

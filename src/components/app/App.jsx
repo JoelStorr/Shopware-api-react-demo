@@ -23,16 +23,32 @@ function App() {
     <>
       <MainHeader />
       <div className="renderBox">
-        <Canvas camera={{ position: [-1.5, 1.5, -2.5] }}>
+        <Canvas camera={{ position: [3, 2.5, 3] }}>
           {orbitControls && <OrbitControls />}
           <Environment background={false} blur={0} path="/" preset="city" />
           <Main />
         </Canvas>
       </div>
       <div className="top-spacer"></div>
-      <div className="scroller box1" id="wasserhahn">Wasserhan</div>
-      <div className="scroller box2" id="2c297ef976e741caa67787d93b405866"> Handtuchhalter</div>
-      <div className="scroller box3" id="hakensysteme">Harkensystheme</div>
+      <div
+        className="scroller box1"
+        id="shopId-929de9a601d346e49f23861b67d6575e"
+      >
+        Wasserhan
+      </div>
+      <div
+        className="scroller box2"
+        id="shopId-2c297ef976e741caa67787d93b405866"
+      >
+        {" "}
+        Handtuchhalter
+      </div>
+      <div
+        className="scroller box3"
+        id="shopId-88e526e83af241e5a29c1a2c26ab596a"
+      >
+        Harkensystheme
+      </div>
     </>
   );
 }

@@ -28,7 +28,7 @@ export default function Main(props) {
   
   });
 
-  useLayoutEffect(() => {
+  /* useLayoutEffect(() => {
     tl.current = gsap.timeline({
       defaults: { duration: 6, ease: "smooth" },
       marker: true,
@@ -42,7 +42,7 @@ export default function Main(props) {
       .to(camera.position, { x: 2.63, y: 1, z: 0.01 }, 6);
 
 
-  }, []);
+  }, []); */
 
 
 
