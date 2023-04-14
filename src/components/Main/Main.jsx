@@ -29,7 +29,7 @@ export default function Main(props) {
     /*   tl.current.seek(scroll.offset * tl.current.duration()); */
 
 /*     console.log(tl1.isActive());
-
+    -> Can use it to render the Instance of the Shop Elent based on the Active Animation State
     tl1.isActive() ? state.camera.lookAt(0,1,0) : null; 
     tl2.isActive() ? state.camera.lookAt(-300,0,-5) : null;  */
 
@@ -67,7 +67,7 @@ export default function Main(props) {
   /*   tl1.from(camera.position, { x: -1.5, y: 2.5, z: -2.5 }); */
 
   tl1.to(camera.position, { duration: 4, x: -3, y: 1.8, z: 0 });
-  tl1.to(camera.rotation, { duration: 4, x: 0, y: 0, z: 0 });
+  tl1.to(camera.rotation, { duration: 4, x: 0, y: -(Math.PI * 0.5), z: 0 }, '<');
 
   const tl2 = gsap.timeline({
     scrollTrigger: {
@@ -80,7 +80,12 @@ export default function Main(props) {
     },
   });
 
-  tl2.to(camera.position, { duration: 4, x: -2.5, y: 1.5, z: 0});
+  tl2.to(camera.position, { duration: 4, x: -2.5, y: 1.5, z: -0.5 });
+  tl2.to(
+    camera.rotation,
+    { duration: 4, x: 0, y: (Math.PI * 0.5), z: 0 },
+    "<"
+  );
 
 
   const tl3 = gsap.timeline({
@@ -94,7 +99,8 @@ export default function Main(props) {
     },
   });
 
-  tl3.to(camera.position, { duration: 4, x: -1, y: 0.5, z: 4 });
+  tl3.to(camera.position, { duration: 4, x: -1, y: 1.5, z: 4 });
+  tl3.to(camera.rotation, { duration: 4, x: -(Math.PI * 0.1), y: Math.PI * 0, z: 0 }, "<");
 
   return (
     <group {...props} dispose={null}>
@@ -111,7 +117,7 @@ export default function Main(props) {
 
 </GizmoHelper>
 
-
+      {/* NOTE: Paset generated Mesh elements */}
       <mesh
         castShadow
         receiveShadow
