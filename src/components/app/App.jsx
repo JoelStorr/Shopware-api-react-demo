@@ -18,7 +18,7 @@ function App() {
 
   //NOTE: Change Leva route for Production
   const {orbitControls} = useControls({ orbitControls: false})
-
+  //NOTE: Base Camera Values -> [3, 2.5, 3]
   return (
     <>
       <MainHeader />

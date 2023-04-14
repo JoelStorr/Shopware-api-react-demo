@@ -1,7 +1,12 @@
 
 import React, {useState, useRef, useLayoutEffect}from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
-import { useGLTF, useHelper,  } from "@react-three/drei";
+import {
+  GizmoHelper,
+  GizmoViewport,
+  useGLTF,
+  useHelper,
+} from "@react-three/drei";
 //import * as THREE from 'three';
 import { PointLightHelper } from 'three/src/helpers/PointLightHelper';
 import { gsap } from 'gsap';
@@ -19,13 +24,15 @@ export default function Main(props) {
   const tl = useRef();
   const camera = useThree((state) => state.camera);
 
-
-  
-
   useFrame((state, delta) => {
-    state.camera.lookAt(0, 1, 0);
-  /*   tl.current.seek(scroll.offset * tl.current.duration()); */
-  
+  /*   state.camera.lookAt(0, 1, 0); */
+    /*   tl.current.seek(scroll.offset * tl.current.duration()); */
+
+/*     console.log(tl1.isActive());
+
+    tl1.isActive() ? state.camera.lookAt(0,1,0) : null; 
+    tl2.isActive() ? state.camera.lookAt(-300,0,-5) : null;  */
+
   });
 
   /* useLayoutEffect(() => {
@@ -44,16 +51,67 @@ export default function Main(props) {
 
   }, []); */
 
+  /* TODO: Animation Baseic */
+  /* MultiScroll Animation */
+  const tl1 = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".box1",
+      markers: true,
+      start: "top 80%",
+      end: "top 30%",
+      scrub: false,
+      toggleActions: "play none reverse none",
+    },
+  });
+
+  /*   tl1.from(camera.position, { x: -1.5, y: 2.5, z: -2.5 }); */
+
+  tl1.to(camera.position, { duration: 4, x: -3, y: 1.8, z: 0 });
+  tl1.to(camera.rotation, { duration: 4, x: 0, y: 0, z: 0 });
+
+  const tl2 = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".box2",
+      markers: true,
+      start: "top 80%",
+      end: "top 30%",
+      scrub: false,
+      toggleActions: "play none reverse none",
+    },
+  });
+
+  tl2.to(camera.position, { duration: 4, x: -2.5, y: 1.5, z: 0});
 
 
+  const tl3 = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".box3",
+      markers: true,
+      start: "top 80%",
+      end: "top 30%",
+      scrub: false,
+      toggleActions: "play none reverse none",
+    },
+  });
 
+  tl3.to(camera.position, { duration: 4, x: -1, y: 0.5, z: 4 });
 
   return (
     <group {...props} dispose={null}>
-  
-      <pointLight position={[-2, 4, 0]} intensity={.5} />
+      <pointLight position={[-2, 4, 0]} intensity={0.5} />
 
-      <pointLight position={[-2, 0, 0]} intensity={.5}/>
+      <pointLight position={[-2, 0, 0]} intensity={0.5} />
+     
+      <GizmoHelper
+        alignment="bottom-right" 
+        margin={[80, 80]}
+
+>
+  <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
+
+</GizmoHelper>
+
+
       <mesh
         castShadow
         receiveShadow
