@@ -12,6 +12,7 @@ import { PointLightHelper } from 'three/src/helpers/PointLightHelper';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/all';
 
+import {useTlStore} from './../../store/store.js';
 
 import './Main.scss';
 
@@ -23,6 +24,16 @@ export default function Main(props) {
   const { nodes, materials } = useGLTF("/src/assets/models/base-kitchen.glb");
   const tl = useRef();
   const camera = useThree((state) => state.camera);
+  const [focitActive, setFocitActive] = useState(false);
+  const [towleHolder, setTowleHolder] = useState(false);
+
+  const tlData = useTlStore((state)=>state.tl1);
+
+ 
+
+
+
+
 
   useFrame((state, delta) => {
   /*   state.camera.lookAt(0, 1, 0); */
@@ -171,7 +182,7 @@ export default function Main(props) {
         position={[-0.85, 1.29, -0.06]}
         scale={[0.06, 0.3, 0.06]}
       />
-      <mesh
+    {/*   <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cube001.geometry}
@@ -186,7 +197,7 @@ export default function Main(props) {
         material={materials.Product}
         position={[-0.85, 1.29, 0.96]}
         scale={[0.06, 0.3, 0.06]}
-      />
+      /> */}
       <mesh
         castShadow
         receiveShadow
@@ -195,7 +206,7 @@ export default function Main(props) {
         position={[-4.51, 1.33, -0.32]}
         scale={[-0.05, -0.05, -0.36]}
       />
-      <mesh
+     {/*  <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cube004.geometry}
@@ -210,7 +221,7 @@ export default function Main(props) {
         material={materials.Product}
         position={[-4.51, 1.33, -1.98]}
         scale={[-0.05, -0.05, -0.36]}
-      />
+      /> */}
     </group>
   );
 }
