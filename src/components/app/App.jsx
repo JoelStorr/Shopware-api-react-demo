@@ -23,7 +23,7 @@ function App() {
     <>
       <MainHeader />
       <div className="renderBox">
-        <Canvas camera={{ position: [3, 2.5, 3] }}>
+        <Canvas camera={{ position: [3, 2, 3], rotation:[0, 1, 0] }}>
           {orbitControls && <OrbitControls />}
           <Environment background={false} blur={0} path="/" preset="city" />
           <Main />
