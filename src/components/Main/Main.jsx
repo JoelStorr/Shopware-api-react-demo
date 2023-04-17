@@ -1,6 +1,5 @@
-
-import React, {useState, useRef, useLayoutEffect}from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import React, { useState, useRef, useLayoutEffect, useEffect } from "react";
+import { useFrame, useThree } from "@react-three/fiber";
 import {
   GizmoHelper,
   GizmoViewport,
@@ -8,43 +7,80 @@ import {
   useHelper,
 } from "@react-three/drei";
 //import * as THREE from 'three';
-import { PointLightHelper } from 'three/src/helpers/PointLightHelper';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/all';
+import { PointLightHelper } from "three/src/helpers/PointLightHelper";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
 
-import {useTlStore} from './../../store/store.js';
+import { useTlStore } from "./../../store/store.js";
 
-import './Main.scss';
-
-
+import "./Main.scss";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Main(props) {
-  const { nodes, materials } = useGLTF("/src/assets/models/base-kitchen.glb");
-  const tl = useRef();
+  const { nodes, materials } = useGLTF("/assets/models/base-kitchen.glb");
+  const [loaded, setLoaded] = useState(false)
   const camera = useThree((state) => state.camera);
-  const [focitActive, setFocitActive] = useState(false);
-  const [towleHolder, setTowleHolder] = useState(false);
+  const [tlIsActive, setTlIsActive] = useState("");
 
-  const tlData = useTlStore((state)=>state.tl1);
+  const tl1Data = useTlStore((state) => state.tl1);
+  const tl2Data = useTlStore((state) => state.tl2);
+  const tl3Data = useTlStore((state) => state.tl3);
 
+  const setTimelineOneState = useTlStore((state) => state.setTimelineOneState);
+  const setTimelineTwoState = useTlStore((state) => state.setTimelineTwoState);
+  const setTimelineThreeState = useTlStore(
+    (state) => state.setTimelineThreeState
+  );
+
+  
+  
+
+
+
+
+    useEffect(()=>{
+      setLoaded(true);
+
+      setInterval(()=>{
+        AnimationStateTracker();
+
+      },1000)
+
+    },[])
+
+    function AnimationStateTracker(){
+      
+      if(camera.position.x === tl1Data.position.x ){
+        console.log('tl1 x matches');
+      }else if(camera.position.x === tl2Data.position.x ){
+        console.log('tl2 x matches');
+      }else if(camera.position.x === tl3Data.position.x ){
+        console.log('tl3 x matches');
+      }
+
+      console.log(camera.position);
+        
  
+    }
 
 
+  /*  useEffect(()=>{
+    if(tl1IsActive != tl1Data.isRunning){
+      setTimelineOneState();
+    }
+    if(tl2IsActive || tl2IsActive != tl2Data.isRunning){
+      setTimelineOneState();
+    }
+    if(tl3IsActive || tl3IsActive != tl3Data.isRunning){
+      setTimelineOneState();
+    }
+  },[tl1IsActive, tl2IsActive, tl3IsActive]) */
+
+  //console.log(tl1Data);
+  /*   console.log(tl1IsActive); */
 
 
-
-  useFrame((state, delta) => {
-  /*   state.camera.lookAt(0, 1, 0); */
-    /*   tl.current.seek(scroll.offset * tl.current.duration()); */
-
-/*     console.log(tl1.isActive());
-    -> Can use it to render the Instance of the Shop Elent based on the Active Animation State
-    tl1.isActive() ? state.camera.lookAt(0,1,0) : null; 
-    tl2.isActive() ? state.camera.lookAt(-300,0,-5) : null;  */
-
-  });
 
   /* useLayoutEffect(() => {
     tl.current = gsap.timeline({
@@ -64,44 +100,49 @@ export default function Main(props) {
 
   /* TODO: Animation Baseic */
   /* MultiScroll Animation */
+
   const tl1 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".box1",
-      markers: true,
-      start: "top 80%",
-      end: "top 30%",
-      scrub: false,
-      toggleActions: "play none reverse none",
-    },
-  });
+      scrollTrigger: {
+        trigger: tl1Data.trigger,
+        markers: true,
+        start: "top 80%",
+        end: "top 30%",
+        scrub: false,
+        toggleActions: "play none reverse reverse",
+      },
+    })
+ 
 
-  /*   tl1.from(camera.position, { x: -1.5, y: 2.5, z: -2.5 }); */
-
-  tl1.to(camera.position, { duration: 4, x: -3, y: 1.8, z: 0 });
-  tl1.to(camera.rotation, { duration: 4, x: 0, y: -(Math.PI * 0.5), z: 0 }, '<');
-
-  const tl2 = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".box2",
-      markers: true,
-      start: "top 80%",
-      end: "top 30%",
-      scrub: false,
-      toggleActions: "play none reverse none",
-    },
-  });
-
-  tl2.to(camera.position, { duration: 4, x: -2.5, y: 1.5, z: -0.5 });
-  tl2.to(
+  tl1.to(camera.position, tl1Data.position);
+  tl1.to(
     camera.rotation,
-    { duration: 4, x: 0, y: (Math.PI * 0.5), z: 0 },
+    tl1Data.rotation,
     "<"
   );
 
+  const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: tl2Data.trigger,
+        markers: true,
+        start: "top 80%",
+        end: "top 30%",
+        scrub: false,
+        toggleActions: "play none reverse reverse",
+      },
+    })
+ 
 
+  tl2.to(camera.position, tl2Data.position);
+  tl2.to(
+    camera.rotation,
+    tl2Data.rotation,
+    "<"
+  );
+
+  
   const tl3 = gsap.timeline({
     scrollTrigger: {
-      trigger: ".box3",
+      trigger: tl3Data.trigger,
       markers: true,
       start: "top 80%",
       end: "top 30%",
@@ -110,23 +151,60 @@ export default function Main(props) {
     },
   });
 
-  tl3.to(camera.position, { duration: 4, x: -1, y: 1.5, z: 4 });
-  tl3.to(camera.rotation, { duration: 4, x: -(Math.PI * 0.1), y: Math.PI * 0, z: 0 }, "<");
+  tl3.to(camera.position, tl3Data.position);
+  tl3.to(camera.rotation, tl3Data.rotation, "<");
+
+
+
+
+    useFrame((state, delta) => {
+      /*   state.camera.lookAt(0, 1, 0); */
+      /*   tl.current.seek(scroll.offset * tl.current.duration()); */
+
+      /*     console.log(tl1.isActive());
+    -> Can use it to render the Instance of the Shop Elent based on the Active Animation State
+    tl1.isActive() ? state.camera.lookAt(0,1,0) : null; 
+    tl2.isActive() ? state.camera.lookAt(-300,0,-5) : null;  */
+
+      /*  tl1.isActive() ? setTl1IsActive(true) : setTl1IsActive(false);
+    tl2.isActive() ? setTl2IsActive(true) : setTl2IsActive(false);
+    tl3.isActive() ? setTl3IsActive(true) : setTl3IsActive(false);
+
+    console.log(tl1.isActive()); */
+
+      /*   if(tl1.isActive()){
+    setTlIsActive('tl1');
+   }else if(tl2.isActive()){
+    setTlIsActive('tl2');
+   }else if(tl3.isActive()){
+    setTlIsActive('tl3');
+   } */
+
+      /* tl1.current.isActive() ? setTlIsActive("tl1") : "";
+      tl2.current.isActive() ? setTlIsActive("tl2") : ""; */
+    });
+
+
+
+
+
+
+
+
+
 
   return (
     <group {...props} dispose={null}>
       <pointLight position={[-2, 4, 0]} intensity={0.5} />
 
       <pointLight position={[-2, 0, 0]} intensity={0.5} />
-     
-      <GizmoHelper
-        alignment="bottom-right" 
-        margin={[80, 80]}
 
->
-  <GizmoViewport axisColors={['red', 'green', 'blue']} labelColor="black" />
-
-</GizmoHelper>
+      <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
+        <GizmoViewport
+          axisColors={["red", "green", "blue"]}
+          labelColor="black"
+        />
+      </GizmoHelper>
 
       {/* NOTE: Paset generated Mesh elements */}
       <mesh
@@ -182,7 +260,7 @@ export default function Main(props) {
         position={[-0.85, 1.29, -0.06]}
         scale={[0.06, 0.3, 0.06]}
       />
-    {/*   <mesh
+      {/*   <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cube001.geometry}
@@ -206,7 +284,7 @@ export default function Main(props) {
         position={[-4.51, 1.33, -0.32]}
         scale={[-0.05, -0.05, -0.36]}
       />
-     {/*  <mesh
+      {/*  <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cube004.geometry}
@@ -226,5 +304,4 @@ export default function Main(props) {
   );
 }
 
-useGLTF.preload("/src/assets/models/base-kitchen.glb");
-
+useGLTF.preload("/assets/models/base-kitchen.glb");
