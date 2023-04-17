@@ -45,7 +45,7 @@ export default function Main(props) {
       setInterval(()=>{
         AnimationStateTracker();
 
-      },1000)
+      },500)
 
     },[])
 
@@ -53,13 +53,20 @@ export default function Main(props) {
       
       if(camera.position.x === tl1Data.position.x ){
         console.log('tl1 x matches');
+        setTlIsActive('tl1');
       }else if(camera.position.x === tl2Data.position.x ){
         console.log('tl2 x matches');
+        setTlIsActive("tl2");
+
       }else if(camera.position.x === tl3Data.position.x ){
         console.log('tl3 x matches');
+        setTlIsActive("tl3");
+
+      }else if(camera.position.x === 3){
+        setTlIsActive(null);
       }
 
-      console.log(camera.position);
+      
         
  
     }
@@ -260,22 +267,28 @@ export default function Main(props) {
         position={[-0.85, 1.29, -0.06]}
         scale={[0.06, 0.3, 0.06]}
       />
-      {/*   <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube001.geometry}
-        material={materials.Product}
-        position={[-0.85, 1.29, 0.43]}
-        scale={[0.06, 0.3, 0.06]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube002.geometry}
-        material={materials.Product}
-        position={[-0.85, 1.29, 0.96]}
-        scale={[0.06, 0.3, 0.06]}
-      /> */}
+     {tlIsActive === 'tl1' && (  
+        <>
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube001.geometry}
+          material={materials.Product}
+          position={[-0.85, 1.29, 0.43]}
+          scale={[0.06, 0.3, 0.06]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube002.geometry}
+          material={materials.Product}
+          position={[-0.85, 1.29, 0.96]}
+          scale={[0.06, 0.3, 0.06]}
+        /> 
+        </>
+      
+      )}
+
       <mesh
         castShadow
         receiveShadow
@@ -284,22 +297,27 @@ export default function Main(props) {
         position={[-4.51, 1.33, -0.32]}
         scale={[-0.05, -0.05, -0.36]}
       />
-      {/*  <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube004.geometry}
-        material={materials.Product}
-        position={[-4.51, 1.33, -1.17]}
-        scale={[-0.05, -0.05, -0.36]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube005.geometry}
-        material={materials.Product}
-        position={[-4.51, 1.33, -1.98]}
-        scale={[-0.05, -0.05, -0.36]}
-      /> */}
+      { tlIsActive === 'tl2' && (
+        <>
+          <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube004.geometry}
+          material={materials.Product}
+          position={[-4.51, 1.33, -1.17]}
+          scale={[-0.05, -0.05, -0.36]}
+        />
+        <mesh
+          castShadow
+          receiveShadow
+          geometry={nodes.Cube005.geometry}
+          material={materials.Product}
+          position={[-4.51, 1.33, -1.98]}
+          scale={[-0.05, -0.05, -0.36]}
+        /> 
+
+        </>
+      )}
     </group>
   );
 }
