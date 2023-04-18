@@ -29,9 +29,7 @@ export default function Main(props) {
 
   const setTimelineOneState = useTlStore((state) => state.setTimelineOneState);
   const setTimelineTwoState = useTlStore((state) => state.setTimelineTwoState);
-  const setTimelineThreeState = useTlStore(
-    (state) => state.setTimelineThreeState
-  );
+  const setTimelineThreeState = useTlStore((state) => state.setTimelineThreeState);
 
   
   
@@ -48,6 +46,17 @@ export default function Main(props) {
       },500)
 
     },[])
+
+
+    useEffect(()=>{
+
+      tlIsActive == 'tl1' ? setTimelineOneState() : null;
+      tlIsActive == 'tl2' ? setTimelineOneState() : null;
+      tlIsActive == 'tl3' ? setTimelineOneState() : null;
+
+
+    },[tlIsActive])
+
 
     function AnimationStateTracker(){
       
@@ -267,6 +276,8 @@ export default function Main(props) {
         position={[-0.85, 1.29, -0.06]}
         scale={[0.06, 0.3, 0.06]}
       />
+
+      {/* Focets */}
      {tlIsActive === 'tl1' && (  
         <>
         <mesh
@@ -297,6 +308,8 @@ export default function Main(props) {
         position={[-4.51, 1.33, -0.32]}
         scale={[-0.05, -0.05, -0.36]}
       />
+
+      {/* Handtuchhalter */}
       { tlIsActive === 'tl2' && (
         <>
           <mesh
