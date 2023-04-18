@@ -29,7 +29,7 @@ export default function Main(props) {
 
   const setTimelineOneState = useTlStore((state) => state.setTimelineOneState);
   const setTimelineTwoState = useTlStore((state) => state.setTimelineTwoState);
-  const setTimelineThreeState = useTlStore((state) => state.setTimelineThreeState);
+  const setTimelineThreeState = useTlStore((state) => state.setTimelineThreeState); 
 
   
   
@@ -50,9 +50,16 @@ export default function Main(props) {
 
     useEffect(()=>{
 
-      tlIsActive == 'tl1' ? setTimelineOneState() : null;
-      tlIsActive == 'tl2' ? setTimelineOneState() : null;
-      tlIsActive == 'tl3' ? setTimelineOneState() : null;
+      tlIsActive == "tl1"
+        ? setTimelineOneState(true)
+        : setTimelineOneState(false);
+      tlIsActive == "tl2"
+        ? setTimelineTwoState(true)
+        : setTimelineTwoState(false);
+      tlIsActive == "tl3"
+        ? setTimelineThreeState(true)
+        : setTimelineThreeState(false);
+
 
 
     },[tlIsActive])

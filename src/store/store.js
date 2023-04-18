@@ -20,10 +20,10 @@ export const useTlStore = create((set) => ({
     rotation: { duration: 2, x: -(Math.PI * 0.1), y: Math.PI * 0, z: 0 },
   },
 
-  setTimelineOneState: () =>
-    set((state) => ({ tl1: { isRunning: !state.tl1.isRunning } })),
-  setTimelineTwoState: () =>
-    set((state) => ({ tl2: { isRunning: !state.tl2.isRunning } })),
-  setTimelineThreeState: () =>
-    set((state) => ({ tl3: { isRunning: !state.tl3.isRunning } })),
+  setTimelineOneState: (change) =>
+    set((state) => ({ ...state ,tl1: { ...state.tl1, isRunning: change } })),
+   setTimelineTwoState: (change) =>
+    set((state) => ({ ...state ,tl2: { ...state.tl2, isRunning: change } })),
+  setTimelineThreeState: (change) =>
+    set((state) => ({ ...state, tl3: { ...state.tl3, isRunning: change } })), 
 }));
