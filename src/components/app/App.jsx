@@ -3,14 +3,15 @@ import { useState } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment, OrbitControls } from '@react-three/drei'
 import {useControls} from 'leva';
-import { ScrollControls, Scroll } from '@react-three/drei';
 
 
 // Custom
-import './App.scss'
-import MainHeader from '../Header/Header'
-import Main from '../Main/Main'
-import { Camera } from 'three';
+import './App.scss';
+import MainHeader from '../Header/Header';
+import Main from '../Main/Main';
+
+import ShopDetailOverlay from '../Main/Overlays/ShopDetailOverlay';
+
 
 
 function App() {
@@ -18,10 +19,11 @@ function App() {
 
   //NOTE: Change Leva route for Production
   const {orbitControls} = useControls({ orbitControls: false})
-  //NOTE: Base Camera Values -> [3, 2.5, 3]
+  //NOTE: Base Camera Values -> [3, 2, 3]
   return (
     <>
       <MainHeader />
+      {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation:[0, 1, 0] }}>
           {orbitControls && <OrbitControls />}
@@ -29,6 +31,7 @@ function App() {
           <Main />
         </Canvas>
       </div>
+      {/* Scroll Spacer */}
       <div className="top-spacer"></div>
       <div
         className="scroller box1"
@@ -49,6 +52,8 @@ function App() {
       >
         Harkensystheme
       </div>
+      {/* Detail Overlay */}
+      <ShopDetailOverlay />
     </>
   );
 }
