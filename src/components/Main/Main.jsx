@@ -67,18 +67,25 @@ export default function Main(props) {
 
     function AnimationStateTracker(){
       
-      if(camera.position.x === tl1Data.position.x ){
-        console.log('tl1 x matches');
-        setTlIsActive('tl1');
-      }else if(camera.position.x === tl2Data.position.x ){
-        console.log('tl2 x matches');
+      if (
+
+        camera.position.z === tl1Data.position.z
+      ) {
+        console.log("tl1 x matches");
+        setTlIsActive("tl1");
+      } else if (
+
+        camera.position.z === tl2Data.position.z
+      ) {
+        console.log("tl2 x matches");
         setTlIsActive("tl2");
+      } else if (
 
-      }else if(camera.position.x === tl3Data.position.x ){
-        console.log('tl3 x matches');
+        camera.position.z === tl3Data.position.z
+      ) {
+        console.log("tl3 x matches");
         setTlIsActive("tl3");
-
-      }else if(camera.position.x === 3){
+      } else  {
         setTlIsActive(null);
       }
 
@@ -124,61 +131,49 @@ export default function Main(props) {
   /* TODO: Animation Baseic */
   /* MultiScroll Animation */
 
-  const tl1 = gsap.timeline({
+  useLayoutEffect(() => {
+    const tl1 = gsap.timeline({
       scrollTrigger: {
         trigger: tl1Data.trigger,
         markers: true,
-        start: "top 80%",
-        end: "top 30%",
+        start: "top 50%",
+        end: "top 45%",
         scrub: false,
-        toggleActions: "play none reverse reverse",
+        toggleActions: "play none reverse none",
       },
-    })
- 
+    });
 
-  tl1.to(camera.position, tl1Data.position);
-  tl1.to(
-    camera.rotation,
-    tl1Data.rotation,
-    "<"
-  );
+    tl1.to(camera.position, tl1Data.position);
+    tl1.to(camera.rotation, tl1Data.rotation, "<");
 
-  const tl2 = gsap.timeline({
+    const tl2 = gsap.timeline({
       scrollTrigger: {
         trigger: tl2Data.trigger,
         markers: true,
-        start: "top 80%",
-        end: "top 30%",
+        start: "top 50%",
+        end: "top 45%",
         scrub: false,
-        toggleActions: "play none reverse reverse",
+        toggleActions: "play none reverse none",
       },
-    })
- 
+    });
 
-  tl2.to(camera.position, tl2Data.position);
-  tl2.to(
-    camera.rotation,
-    tl2Data.rotation,
-    "<"
-  );
+    tl2.to(camera.position, tl2Data.position);
+    tl2.to(camera.rotation, tl2Data.rotation, "<");
 
-  
-  const tl3 = gsap.timeline({
-    scrollTrigger: {
-      trigger: tl3Data.trigger,
-      markers: true,
-      start: "top 80%",
-      end: "top 30%",
-      scrub: false,
-      toggleActions: "play none reverse none",
-    },
-  });
+    const tl3 = gsap.timeline({
+      scrollTrigger: {
+        trigger: tl3Data.trigger,
+        markers: true,
+        start: "top 50%",
+        end: "top 45%",
+        scrub: false,
+        toggleActions: "play none reverse none",
+      },
+    });
 
-  tl3.to(camera.position, tl3Data.position);
-  tl3.to(camera.rotation, tl3Data.rotation, "<");
-
-
-
+    tl3.to(camera.position, tl3Data.position);
+    tl3.to(camera.rotation, tl3Data.rotation, "<");
+  }, []);
 
     useFrame((state, delta) => {
       /*   state.camera.lookAt(0, 1, 0); */
