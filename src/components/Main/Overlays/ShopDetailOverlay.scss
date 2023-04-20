@@ -11,15 +11,16 @@
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    
+    box-sizing: border-box;
     
 }
 
 .detailScreen-button-spacer{
     background-color: rgba(0, 191, 255, 0.302);
-    min-width: 30vw;
+    min-width: 20vw;
+    max-width: 35vw;
     min-height: 60vh;
-
+    padding: 50px;
     display: flex;
     align-items: center;
     flex-direction: row;
@@ -36,6 +37,6 @@
 
 .detailScreen-detail-box{
     background-color: rgba(218, 7, 234, 0.451);
-    min-width: 45vw;
-    min-height: 60vh;
+    min-width: 55vw;
+    min-height: 80vh;
 }

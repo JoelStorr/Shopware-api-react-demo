@@ -6,7 +6,7 @@ export const useTlStore = create(
     tl1: {
       isRunning: false,
       trigger: ".box1",
-      position: { duration: 2, x: -2, y: 1.3, z: 0.2 },
+      position: { duration: 2, x: -2, y: 1.3, z: 0.5 },
       rotation: { duration: 2, x: 0, y: -(Math.PI * 0.5), z: 0 },
       groupRef: null,
     },
