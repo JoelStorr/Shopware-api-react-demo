@@ -8,7 +8,7 @@ export const useTlStore = create(
     tl1: {
       isRunning: false,
       trigger: '.box1',
-      position: { duration: 2, x: -3, y: 1.8, z: 0 },
+      position: { duration: 2, x: -3, y: 1.8, z: 1 },
       rotation: { duration: 2, x: 0, y: -(Math.PI * 0.5), z: 0 },
     },
     tl2: {
