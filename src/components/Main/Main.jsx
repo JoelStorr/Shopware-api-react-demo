@@ -316,37 +316,40 @@ export default function Main(props) {
       )}
       </group>
 
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.Cube003.geometry}
-        material={materials.Product}
-        position={[-4.51, 1.33, -0.32]}
-        scale={[-0.05, -0.05, -0.36]}
-      />
-
-      {/* Handtuchhalter */}
-      { tlIsActive === 'tl2' && (
-        <>
-          <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube004.geometry}
-          material={materials.Product}
-          position={[-4.51, 1.33, -1.17]}
-          scale={[-0.05, -0.05, -0.36]}
-        />
+      <group ref={towlHolder}>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube005.geometry}
+          geometry={nodes.Cube003.geometry}
           material={materials.Product}
-          position={[-4.51, 1.33, -1.98]}
+          position={[-4.51, 1.33, -0.32]}
           scale={[-0.05, -0.05, -0.36]}
-        /> 
+        />
+
+        {/* Handtuchhalter */}
+        { tlIsActive === 'tl2' && (
+          <>
+            <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube004.geometry}
+            material={materials.Product}
+            position={[-4.51, 1.33, -1.17]}
+            scale={[-0.05, -0.05, -0.36]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.Cube005.geometry}
+            material={materials.Product}
+            position={[-4.51, 1.33, -1.98]}
+            scale={[-0.05, -0.05, -0.36]}
+          /> 
 
         </>
       )}
+      </group>
+
     </group>
   );
 }
