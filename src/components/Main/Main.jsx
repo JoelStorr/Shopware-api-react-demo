@@ -31,14 +31,23 @@ export default function Main(props) {
   const setTimelineTwoState = useTlStore((state) => state.setTimelineTwoState);
   const setTimelineThreeState = useTlStore((state) => state.setTimelineThreeState); 
 
-  
+  const setRefTl1 = useTlStore((state) => state.setRefTl1); 
+  const setRefTl2 = useTlStore((state) => state.setRefTl2); 
+  const setRefTl3 = useTlStore((state) => state.setRefTl3); 
+
+  const focetGroupe = useRef();
+  const towlHolder = useRef();
+  const hookSystem = useRef();
   
 
-
+  
 
 
     useEffect(()=>{
       setLoaded(true);
+      setRefTl1(focetGroupe.current);
+      setRefTl2(towlHolder.current);
+      setRefTl3(hookSystem.current);
 
       setInterval(()=>{
         AnimationStateTracker();
@@ -46,6 +55,9 @@ export default function Main(props) {
       },500)
 
     },[])
+
+
+
 
 
     useEffect(()=>{
@@ -270,6 +282,7 @@ export default function Main(props) {
         position={[-1.27, 0.75, 0]}
         scale={0.41}
       />
+      <group ref={focetGroupe}>
       <mesh
         castShadow
         receiveShadow
@@ -301,6 +314,7 @@ export default function Main(props) {
         </>
       
       )}
+      </group>
 
       <mesh
         castShadow

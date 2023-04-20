@@ -7,6 +7,7 @@ export default function ShopDetailOverlay() {
 
 
   const [detailsActive, setDetailsActive] = useState(false);
+  const [activeElementRef, setActiveElementRef] = useState(null)
 
   useEffect(()=>{
     const unsubscribeTl = useTlStore.subscribe(
@@ -14,14 +15,18 @@ export default function ShopDetailOverlay() {
       (tl1) => {
         if(tl1.isRunning){
           console.log('running element one detail')
+          console.log(tl1.groupRef)
           setDetailsActive(true);
+          setActiveElementRef(tl1.groupRef);
         }else{
           console.log('removed element one detail')
-          setDetailsActive(false)
+          setDetailsActive(false);
+          setActiveElementRef(null);
         }
       }
     );
 
+    console.log(activeElementRef);
     return ()=>{
       unsubscribeTl();
     }
