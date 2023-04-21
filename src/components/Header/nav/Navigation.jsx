@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import './Navigation.scss';
+import apiCategoriesHelper from "../../../helper/shopware api/apiCategoriesHelper";
 
 export default function Navigation() {
   const shopwareDomain = "http://localhost/store-api/";
@@ -169,6 +170,10 @@ export default function Navigation() {
     }
 
 
+
+
+    let checkData = apiCategoriesHelper();
+    console.log(checkData)
 
 
   return (
