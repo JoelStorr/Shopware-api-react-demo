@@ -80,7 +80,7 @@ export default async function apiCategoriesHelper(){
       element.children = sortedArray;
     });
 
-    console.log("Categoreis:", categories);
+    //console.log("Categoreis:", categories);
    
     return categoreisCopy;
   }
