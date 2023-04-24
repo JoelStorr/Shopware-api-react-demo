@@ -18,10 +18,8 @@ export default async function apiRequest(requestType) {
 
   if (requestType === 1) {
     data = await getCategories();
-    /* console.log('Ran Categorie Listing') */
   }else if (requestType === 3) {
     data = await getProductList();
-   /* console.log('Ran Product Listing') */
   }
 
   return data;
@@ -48,7 +46,6 @@ async function getProductList(){
     url: `${shopwareDomain}product-listing/929de9a601d346e49f23861b67d6575e`,
     headers: { "sw-access-key": "SWSCWDHDQLQ4UM9YZZZIEUXLBQ" },
   }).then((res) => {
-    console.log(res);
     return res.data.elements;
   });
   return result;
