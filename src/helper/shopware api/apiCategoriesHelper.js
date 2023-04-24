@@ -3,10 +3,11 @@ import { useState } from "react";
 import apiRequest, {RequestType} from "./apiHelper";
 
 
+
 export default async function apiCategoriesHelper(){
-    let data = await apiRequest(RequestType.categories);
-    /* console.log('--------------- Data ---------------')
-    console.log(data); */
+  
+    let data = await apiRequest( RequestType.categories);
+
     let orderData = await orderNav(data);
     let fullySorted = sortSubCategories(orderData);
     return fullySorted;
@@ -76,7 +77,7 @@ export default async function apiCategoriesHelper(){
 
       //Send it back into the State
 
-      console.log(sortedArray);
+      /* console.log(sortedArray); */
       element.children = sortedArray;
     });
 
