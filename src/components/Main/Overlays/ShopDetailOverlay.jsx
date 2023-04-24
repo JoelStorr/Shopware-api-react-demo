@@ -11,6 +11,7 @@ import { getProductList } from "../../../helper/shopware api/apiProductHelper";
 export default function ShopDetailOverlay() {
   const [detailsActive, setDetailsActive] = useState(false);
   const [activeElementRef, setActiveElementRef] = useState(null);
+  const [productList, setProductList] = useState(null);
   
 
   useEffect(() => {
@@ -51,9 +52,15 @@ export default function ShopDetailOverlay() {
   });
 
 
+  /* NOTE: Get Product List for categorie */
+  /* TODO: Remove Placeholder Value  */
+
+  const tempCategorieID = '929de9a601d346e49f23861b67d6575e';
+
+
   useEffect(()=>{
     if(detailsActive){
-      getProductList();
+      setProductList(getProductList(tempCategorieID));
     }
   }, [detailsActive])
 

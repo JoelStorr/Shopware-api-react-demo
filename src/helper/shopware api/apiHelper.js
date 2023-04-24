@@ -12,14 +12,15 @@ export class RequestType{
 
 
 
-export default async function apiRequest(requestType) {
+export default async function apiRequest(requestType, categoryID = null) {
 
     let data;
 
   if (requestType === 1) {
     data = await getCategories();
   }else if (requestType === 3) {
-    data = await getProductList();
+    categoryID === null ? console.error('Pleas provide a category ID to select Products') : null;
+    data = await getProductList(categoryID);
   }
 
   return data;
@@ -39,11 +40,11 @@ async function getCategories(){
 }
 
 
-async function getProductList(){
+async function getProductList(categoryID){
   let result;
   result = axios({
     method: "post",
-    url: `${shopwareDomain}product-listing/929de9a601d346e49f23861b67d6575e`,
+    url: `${shopwareDomain}product-listing/${categoryID}`,
     headers: { "sw-access-key": "SWSCWDHDQLQ4UM9YZZZIEUXLBQ" },
   }).then((res) => {
     return res.data.elements;
