@@ -50,24 +50,42 @@ export default function ShopDetailOverlay() {
 
   /* NOTE: Get Product List for categorie */
   /* TODO: Remove Placeholder Value  */
-
+  /* TODO: Fix React Async Error on Call */
   const tempCategorieID = "929de9a601d346e49f23861b67d6575e";
 
   useEffect(() => {
     if (detailsActive) {
       getProductList(tempCategorieID)
         .then((val) => {
+          console.log('return Fetch Val: ', val)
           setProductList(val);
+          return Promise.resolve(val);
         })
-        .then(() => {
-          setProductListLength(productList.length);
+        .then((val2) => {
+
+          console.log('Fetch Val:', val2)
+          
+          setProductListLength(()=>{return val2.length});
+          return;
         })
-        .then(()=>{
+        .then((val)=>{
           console.log(productListLength);
           console.log(productList[0])
-        });
+        }).catch(e=>console.error(e));
+        
     }
   }, [detailsActive]);
+
+
+
+  async function fetchProdList(){
+    let data = await getProductList(tempCategorieID);
+    setProductList((prev)=>data);
+    setProductListLength(productList.length);
+
+  }
+
+
 
   /* NOTE: Animation Logic */
 
@@ -75,7 +93,7 @@ export default function ShopDetailOverlay() {
 
   function moveRefLeft() {
 
-    setActiveProductIndex((prev)=> prev - 1)
+    setActiveProductIndex((prev)=> prev - 1);
 
     gsap.to(activeElementRef.position, {
       duration: 2,
@@ -99,8 +117,8 @@ export default function ShopDetailOverlay() {
       {detailsActive && (
         <div className="shopDetailOverlay">
           <div className="detailScreen-button-spacer">
-            <button onClick={moveRefLeft}>left</button>
-            <button onClick={moveRefRight}>right</button>
+            <button onClick={moveRefLeft} className={activeProductIndex <= productListLength ? 'nextProdHider' : ''}>next</button>
+            <button onClick={moveRefRight}>prev</button>
           </div>
           <div className="detailScreen-detail-box">
             <h1>Demo Data</h1>

@@ -11,5 +11,5 @@ export async function getProductList(categoryID){
       console.log(res);
       return res;
     });
-    return listData;
+    return Promise.resolve(listData);
 }
