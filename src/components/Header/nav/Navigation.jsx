@@ -28,8 +28,8 @@ export default function Navigation() {
   useEffect(()=>{
     if(categories.length > 0){
       setSortedSub(true);
-      console.log('------------ Sorted Data --------------')
-      console.log(categories);
+   /*    console.log('------------ Sorted Data --------------')
+      console.log(categories); */
     }
   },[categories])
 

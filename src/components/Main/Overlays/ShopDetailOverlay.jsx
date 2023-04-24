@@ -4,9 +4,14 @@ import { gsap } from "gsap";
 import "./ShopDetailOverlay.scss";
 import { useFrame } from "@react-three/fiber";
 
+
+import { getProductList } from "../../../helper/shopware api/apiProductHelper";
+
+
 export default function ShopDetailOverlay() {
   const [detailsActive, setDetailsActive] = useState(false);
   const [activeElementRef, setActiveElementRef] = useState(null);
+  
 
   useEffect(() => {
     const unsubscribeTl1 = useTlStore.subscribe(
@@ -45,6 +50,15 @@ export default function ShopDetailOverlay() {
     };
   });
 
+
+  useEffect(()=>{
+    if(detailsActive){
+      getProductList();
+    }
+  }, [detailsActive])
+
+
+  /* NOTE: Animation Logic */
   function moveRefLeft() {
    
 

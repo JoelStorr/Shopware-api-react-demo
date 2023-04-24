@@ -5,8 +5,8 @@ import apiRequest, {RequestType} from "./apiHelper";
 
 export default async function apiCategoriesHelper(){
     let data = await apiRequest(RequestType.categories);
-    console.log('--------------- Data ---------------')
-    console.log(data);
+    /* console.log('--------------- Data ---------------')
+    console.log(data); */
     let orderData = await orderNav(data);
     let fullySorted = sortSubCategories(orderData);
     return fullySorted;
