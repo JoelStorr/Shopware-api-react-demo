@@ -4,15 +4,14 @@ import { gsap } from "gsap";
 import "./ShopDetailOverlay.scss";
 import { useFrame } from "@react-three/fiber";
 
-
 import { getProductList } from "../../../helper/shopware api/apiProductHelper";
-
 
 export default function ShopDetailOverlay() {
   const [detailsActive, setDetailsActive] = useState(false);
   const [activeElementRef, setActiveElementRef] = useState(null);
   const [productList, setProductList] = useState(null);
-  
+  const [productListLength, setProductListLength] = useState(null);
+  const [activeProductIndex, setActiveProductIndex] = useState(0);
 
   useEffect(() => {
     const unsubscribeTl1 = useTlStore.subscribe(
@@ -21,25 +20,23 @@ export default function ShopDetailOverlay() {
         if (tl1.isRunning) {
           console.log("running element one detail");
           console.log(tl1.groupRef);
-          setDetailsActive('tl1');
+          setDetailsActive("tl1");
           setActiveElementRef(tl1.groupRef);
-        } else if(detailsActive === "tl1" && !tl1.isRunning){
-          setDetailsActive(false)
+        } else if (detailsActive === "tl1" && !tl1.isRunning) {
+          setDetailsActive(false);
         }
       }
     );
 
     const unsubscribeTl2 = useTlStore.subscribe(
-      (state)=> state.tl2,
+      (state) => state.tl2,
       (tl2) => {
-        if(tl2.isRunning){
+        if (tl2.isRunning) {
           console.log("running element two detail");
-          setDetailsActive('tl2');
+          setDetailsActive("tl2");
           setActiveElementRef(tl2.groupRef);
-        }else if (detailsActive === "tl2" && !tl2.isRunning) {
-          
-            setDetailsActive(false);
-         
+        } else if (detailsActive === "tl2" && !tl2.isRunning) {
+          setDetailsActive(false);
         }
       }
     );
@@ -49,25 +46,36 @@ export default function ShopDetailOverlay() {
       unsubscribeTl1();
       unsubscribeTl2();
     };
-  });
-
+  }, []);
 
   /* NOTE: Get Product List for categorie */
   /* TODO: Remove Placeholder Value  */
 
-  const tempCategorieID = '929de9a601d346e49f23861b67d6575e';
+  const tempCategorieID = "929de9a601d346e49f23861b67d6575e";
 
-
-  useEffect(()=>{
-    if(detailsActive){
-      setProductList(getProductList(tempCategorieID));
+  useEffect(() => {
+    if (detailsActive) {
+      getProductList(tempCategorieID)
+        .then((val) => {
+          setProductList(val);
+        })
+        .then(() => {
+          setProductListLength(productList.length);
+        })
+        .then(()=>{
+          console.log(productListLength);
+          console.log(productList[0])
+        });
     }
-  }, [detailsActive])
-
+  }, [detailsActive]);
 
   /* NOTE: Animation Logic */
+
+  /* TODO: When out of Product range you have to deactivate the Direction Button */
+
   function moveRefLeft() {
-   
+
+    setActiveProductIndex((prev)=> prev - 1)
 
     gsap.to(activeElementRef.position, {
       duration: 2,
@@ -76,7 +84,8 @@ export default function ShopDetailOverlay() {
     });
   }
   function moveRefRight() {
-    
+
+     setActiveProductIndex((prev) => prev + 1);
 
     gsap.to(activeElementRef.position, {
       duration: 2,
@@ -107,10 +116,10 @@ export default function ShopDetailOverlay() {
               Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
               dolor sit amet.
             </p>
-          <div className="detailScreen-btn-box">
-            <button>Remember Later</button>
-            <button>Add to Cart</button>
-          </div>
+            <div className="detailScreen-btn-box">
+              <button>Remember Later</button>
+              <button>Add to Cart</button>
+            </div>
           </div>
         </div>
       )}
