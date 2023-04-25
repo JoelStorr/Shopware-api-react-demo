@@ -9,8 +9,8 @@ import { getProductList } from "../../../helper/shopware api/apiProductHelper";
 export default function ShopDetailOverlay() {
   const [detailsActive, setDetailsActive] = useState(false);
   const [activeElementRef, setActiveElementRef] = useState(null);
-  const [productList, setProductList] = useState(null);
-  const [productListLength, setProductListLength] = useState(null);
+  const [productList, setProductList] = useState([]);
+/*   const [productListLength, setProductListLength] = useState(null); */
   const [activeProductIndex, setActiveProductIndex] = useState(0);
 
   useEffect(() => {
@@ -51,6 +51,7 @@ export default function ShopDetailOverlay() {
   /* NOTE: Get Product List for categorie */
   /* TODO: Remove Placeholder Value  */
   /* TODO: Fix React Async Error on Call */
+  /* NOTE: Calculated data length on the Fly and not on data fetch ?  */
   const tempCategorieID = "929de9a601d346e49f23861b67d6575e";
 
   useEffect(() => {
@@ -65,11 +66,11 @@ export default function ShopDetailOverlay() {
 
           console.log('Fetch Val:', val2)
           
-          setProductListLength(()=>{return val2.length});
+  /*         setProductListLength(()=>{return val2.length}); */
           return;
         })
         .then((val)=>{
-          console.log(productListLength);
+        /*   console.log(productListLength); */
           console.log(productList[0])
         }).catch(e=>console.error(e));
         
@@ -81,7 +82,7 @@ export default function ShopDetailOverlay() {
   async function fetchProdList(){
     let data = await getProductList(tempCategorieID);
     setProductList((prev)=>data);
-    setProductListLength(productList.length);
+    /* setProductListLength(productList.length); */
 
   }
 
@@ -93,7 +94,8 @@ export default function ShopDetailOverlay() {
 
   function moveRefLeft() {
 
-    setActiveProductIndex((prev)=> prev - 1);
+    setActiveProductIndex(()=>activeProductIndex - 1);
+    console.log(activeProductIndex);
 
     gsap.to(activeElementRef.position, {
       duration: 2,
@@ -103,7 +105,8 @@ export default function ShopDetailOverlay() {
   }
   function moveRefRight() {
 
-     setActiveProductIndex((prev) => prev + 1);
+     setActiveProductIndex(()=> activeProductIndex + 1);
+      console.log(activeProductIndex);
 
     gsap.to(activeElementRef.position, {
       duration: 2,
@@ -114,31 +117,47 @@ export default function ShopDetailOverlay() {
 
   return (
     <>
-      {detailsActive && (
+      {detailsActive && productList.length > 0 && (
         <div className="shopDetailOverlay">
           <div className="detailScreen-button-spacer">
-            <button onClick={moveRefLeft} className={activeProductIndex <= productListLength ? 'nextProdHider' : ''}>next</button>
-            <button onClick={moveRefRight}>prev</button>
-          </div>
-          <div className="detailScreen-detail-box">
-            <h1>Demo Data</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam
-              nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam
-              erat, sed diam voluptua. At vero eos et accusam et justo duo
-              dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-              sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit
-              amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor
-              invidunt ut labore et dolore magna aliquyam erat, sed diam
-              voluptua. At vero eos et accusam et justo duo dolores et ea rebum.
-              Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum
-              dolor sit amet.
-            </p>
-            <div className="detailScreen-btn-box">
-              <button>Remember Later</button>
-              <button>Add to Cart</button>
+            <div className={activeProductIndex > 0 ? "" : "nextProdHider"}>
+              <button onClick={moveRefLeft}>prev</button>
+            </div>
+            <div
+              className={
+                activeProductIndex < productList.length - 1
+                  ? ""
+                  : "nextProdHider"
+              }
+            >
+              <button onClick={moveRefRight}>next</button>
             </div>
           </div>
+
+          {productList.length > 0 && (
+            <div className="detailScreen-detail-box">
+              <div className="box-header">
+                <div>
+                  <h1>{productList[activeProductIndex].name}</h1>
+                  <p>by {productList[activeProductIndex].manufacturer.name}</p>
+                </div>
+                <div>
+                  <h2>
+                    {productList[activeProductIndex].calculatedPrice.unitPrice}
+                    €
+                  </h2>
+                  <p>{productList[activeProductIndex].available ? 'In Stock' : 'Comming back soon'}</p>
+                </div>
+              </div>
+              <p className="text-box">
+                {productList[activeProductIndex].description}
+              </p>
+              <div className="detailScreen-btn-box">
+                <button>Remember Later</button>
+                <button>Add to Cart</button>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </>
