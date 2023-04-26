@@ -25,11 +25,14 @@ export default function ShopDetailOverlay() {
           setDetailsActive("tl1");
           setActiveElementRef(state.tl1.groupRef);
           setCategoryID(state.tl1.categoryID);
+      /*     activeElementRef.position.z + (0.5 * activeProductIndex) */
+           setActiveProductIndex(0);
         }else if(state.tl2.isRunning){
           console.log("running element two detail");
           setDetailsActive("tl2");
           setActiveElementRef(state.tl2.groupRef);
           setCategoryID(state.tl2.categoryID);
+          setActiveProductIndex(0)
         } else if (!state.tl1.isRunning && !state.tl2.isRunning) {
           setDetailsActive(false);
         }
