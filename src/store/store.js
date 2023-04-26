@@ -14,7 +14,7 @@ export const useTlStore = create(
     tl2: {
       isRunning: false,
       trigger: ".box2",
-      position: { duration: 2, x: -2.5, y: 1.5, z: -0.5 },
+      position: { duration: 2, x: -2.5, y: 1.5, z: -1.3 },
       rotation: { duration: 2, x: 0, y: Math.PI * 0.5, z: 0 },
       groupRef: null,
       categoryID: null,

@@ -36,8 +36,6 @@ export default function ShopDetailOverlay() {
       }
     );
 
- 
-
     console.log(activeElementRef);
     return () => {
       unsubscribeTl();
@@ -105,7 +103,7 @@ export default function ShopDetailOverlay() {
     } else if (detailsActive === "tl2") {
       gsap.to(activeElementRef.position, {
         duration: 2,
-        z: activeElementRef.position.z - 0.5,
+        z: activeElementRef.position.z - 0.8,
         ease: "power4",
       });
 
@@ -128,7 +126,7 @@ export default function ShopDetailOverlay() {
       }else if( detailsActive === 'tl2'){
          gsap.to(activeElementRef.position, {
            duration: 2,
-           z: activeElementRef.position.z + 0.5,
+           z: activeElementRef.position.z + 0.8,
            ease: "power4",
          });
       }
