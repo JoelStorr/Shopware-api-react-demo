@@ -13,6 +13,8 @@ export default function ShopDetailOverlay() {
 /*   const [productListLength, setProductListLength] = useState(null); */
   const [activeProductIndex, setActiveProductIndex] = useState(0);
 
+  const [categoryID, setCategoryID] = useState();
+
   useEffect(() => {
     const unsubscribeTl1 = useTlStore.subscribe(
       (state) => state.tl1,
@@ -22,6 +24,7 @@ export default function ShopDetailOverlay() {
           console.log(tl1.groupRef);
           setDetailsActive("tl1");
           setActiveElementRef(tl1.groupRef);
+          setCategoryID(tl1.categoryID);
         } else if (detailsActive === "tl1" && !tl1.isRunning) {
           setDetailsActive(false);
         }
@@ -35,6 +38,8 @@ export default function ShopDetailOverlay() {
           console.log("running element two detail");
           setDetailsActive("tl2");
           setActiveElementRef(tl2.groupRef);
+          setCategoryID(tl2.categoryID);
+
         } else if (detailsActive === "tl2" && !tl2.isRunning) {
           setDetailsActive(false);
         }
@@ -56,7 +61,7 @@ export default function ShopDetailOverlay() {
 
   useEffect(() => {
     if (detailsActive) {
-      getProductList(tempCategorieID)
+      getProductList(categoryID)
         .then((val) => {
           console.log('return Fetch Val: ', val)
           setProductList(val);
@@ -146,7 +151,7 @@ export default function ShopDetailOverlay() {
                     {productList[activeProductIndex].calculatedPrice.unitPrice}
                     €
                   </h2>
-                  <p>{productList[activeProductIndex].available ? 'In Stock' : 'Comming back soon'}</p>
+                  <span>{productList[activeProductIndex].available ? 'In Stock' : 'Comming back soon'}</span>
                 </div>
               </div>
               <p className="text-box">

@@ -3,6 +3,7 @@ import axios from "axios";
 
 import './Navigation.scss';
 import apiCategoriesHelper from "../../../helper/shopware api/apiCategoriesHelper";
+import { useTlStore } from "./../../../store/store.js";
 
 export default function Navigation() {
   const shopwareDomain = "http://localhost/store-api/";
@@ -12,6 +13,9 @@ export default function Navigation() {
   const [isHovering, setIsHovering] = useState(false);
   const [endOfDemo, setEndOfDemo] = useState(false)
 
+   const setTl1CategoryId = useTlStore((state) => state.setTl1CategoryId);
+   const setTl2CategoryId = useTlStore((state) => state.setTl2CategoryId);
+   const setTl3CategoryId = useTlStore((state) => state.setTl3CategoryId);
 
 
   useEffect(() => {
@@ -20,6 +24,7 @@ export default function Navigation() {
           (data)=>{
             setCategories(data)
             setSortedSub(true);
+            return Promise.resolve(true)
           }
         );
 
@@ -28,6 +33,9 @@ export default function Navigation() {
   useEffect(()=>{
     if(categories.length > 0){
       setSortedSub(true);
+      setTl1CategoryId(categories[0].children[0].id);
+      setTl2CategoryId(categories[0].children[1].id);
+      setTl3CategoryId(categories[0].children[2].id);
    /*    console.log('------------ Sorted Data --------------')
       console.log(categories); */
     }
