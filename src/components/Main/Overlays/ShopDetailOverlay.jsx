@@ -16,40 +16,32 @@ export default function ShopDetailOverlay() {
   const [categoryID, setCategoryID] = useState();
 
   useEffect(() => {
-    const unsubscribeTl1 = useTlStore.subscribe(
-      (state) => state.tl1,
-      (tl1) => {
-        if (tl1.isRunning) {
+    const unsubscribeTl = useTlStore.subscribe(
+      (state) => state,
+      (state) => {
+        if (state.tl1.isRunning) {
           console.log("running element one detail");
-          console.log(tl1.groupRef);
+          console.log(state.tl1.groupRef);
           setDetailsActive("tl1");
-          setActiveElementRef(tl1.groupRef);
-          setCategoryID(tl1.categoryID);
-        } else if (detailsActive === "tl1" && !tl1.isRunning) {
-          setDetailsActive(false);
-        }
-      }
-    );
-
-    const unsubscribeTl2 = useTlStore.subscribe(
-      (state) => state.tl2,
-      (tl2) => {
-        if (tl2.isRunning) {
+          setActiveElementRef(state.tl1.groupRef);
+          setCategoryID(state.tl1.categoryID);
+        }else if(state.tl2.isRunning){
           console.log("running element two detail");
           setDetailsActive("tl2");
-          setActiveElementRef(tl2.groupRef);
-          setCategoryID(tl2.categoryID);
-
-        } else if (detailsActive === "tl2" && !tl2.isRunning) {
+          setActiveElementRef(state.tl2.groupRef);
+          setCategoryID(state.tl2.categoryID);
+        } else if (!state.tl1.isRunning && !state.tl2.isRunning) {
           setDetailsActive(false);
         }
       }
     );
+
+ 
 
     console.log(activeElementRef);
     return () => {
-      unsubscribeTl1();
-      unsubscribeTl2();
+      unsubscribeTl();
+    
     };
   }, []);
 
@@ -102,22 +94,45 @@ export default function ShopDetailOverlay() {
     setActiveProductIndex(()=>activeProductIndex - 1);
     console.log(activeProductIndex);
 
-    gsap.to(activeElementRef.position, {
-      duration: 2,
-      z: activeElementRef.position.z + 0.5,
-      ease: "power4",
-    });
+   
+    if (detailsActive === "tl1") {
+       gsap.to(activeElementRef.position, {
+         duration: 2,
+         z: activeElementRef.position.z + 0.5,
+         ease: "power4",
+       });
+
+    } else if (detailsActive === "tl2") {
+      gsap.to(activeElementRef.position, {
+        duration: 2,
+        z: activeElementRef.position.z - 0.5,
+        ease: "power4",
+      });
+
+    }
+
+
   }
   function moveRefRight() {
 
      setActiveProductIndex(()=> activeProductIndex + 1);
       console.log(activeProductIndex);
 
-    gsap.to(activeElementRef.position, {
-      duration: 2,
-      z: activeElementRef.position.z - 0.5,
-      ease: "power4",
-    });
+      if(detailsActive === 'tl1'){
+        gsap.to(activeElementRef.position, {
+          duration: 2,
+          z: activeElementRef.position.z - 0.5,
+          ease: "power4",
+        });
+
+      }else if( detailsActive === 'tl2'){
+         gsap.to(activeElementRef.position, {
+           duration: 2,
+           z: activeElementRef.position.z + 0.5,
+           ease: "power4",
+         });
+      }
+
   }
 
   return (
