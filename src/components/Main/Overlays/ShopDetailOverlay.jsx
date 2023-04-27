@@ -27,20 +27,21 @@ export default function ShopDetailOverlay() {
           setDetailsActive("tl1");
           setActiveElementRef(state.tl1.groupRef);
           setCategoryID(state.tl1.categoryID);
-          setActiveProductIndex(0);
+
         }else if(state.tl2.isRunning){
           setDetailsActive("tl2");
           setActiveElementRef(state.tl2.groupRef);
           setCategoryID(state.tl2.categoryID);
-          setActiveProductIndex(0)
+
         } else if (!state.tl1.isRunning && !state.tl2.isRunning) {
           
           setDetailsActive(false);
+          setActiveProductIndex(0);
         }
       }
     );
 
-    console.log(activeElementRef);
+    /* console.log(activeElementRef); */
     return () => {
       unsubscribeTl();
     
@@ -59,11 +60,12 @@ export default function ShopDetailOverlay() {
         .then((val) => {
           console.log('return Fetch Val: ', val)
           setProductList(val);
-          return Promise.resolve(val);
+          /* return Promise.resolve(val); */
         })
         .then((val2) => {
           console.log('Details Check: ')
           console.log(detailsActive);
+          console.log(activeProductIndex)
           if (
             detailsActive === "tl1" ||
             detailsActive === "tl2" ||
@@ -76,30 +78,33 @@ export default function ShopDetailOverlay() {
           }
 
 
-         /*  console.log('Fetch Val:', val2) */
-          
-  /*         setProductListLength(()=>{return val2.length}); */
+          /* console.log('Fetch Val:', val2) */ 
+          /* setProductListLength(()=>{return val2.length}); */
           return;
         })
         .then((val)=>{
-        /*   console.log(productListLength); */
-          console.log(productList[0])
+          /* console.log(productListLength); */
+          /* console.log(productList[0]) */
         }).catch(e=>console.error(e));
         
     }else{
       if(activeElementRef){
         console.log('Last detail info:', lastDetailsActive);
-        if(lastDetailsActive === 'tl1'){
+        if(lastDetailsActive.lastDetails === 'tl1'){
           console.log('Offset - Runner');
-          gsap.to(activeElementRef.position,{
-            duration: 1,
-            z: activeElementRef.position.z + (0.5 * activeProductIndex),
-            ease: "power4"
-          })
-        }else if(lastDetailsActive === 'tl2'){
           gsap.to(activeElementRef.position, {
             duration: 1,
-            z: activeElementRef.position.z + (0.8 * activeProductIndex),
+            z:
+              activeElementRef.position.z +
+              0.5 * lastDetailsActive.lastActiveProductIndex,
+            ease: "power4",
+          });
+        }else if(lastDetailsActive.lastDetails === 'tl2'){
+          gsap.to(activeElementRef.position, {
+            duration: 1,
+            z:
+              activeElementRef.position.z -
+              0.8 * lastDetailsActive.lastActiveProductIndex,
             ease: "power4",
           });
         }
@@ -109,12 +114,7 @@ export default function ShopDetailOverlay() {
 
 
 
-  async function fetchProdList(){
-    let data = await getProductList(tempCategorieID);
-    setProductList((prev)=>data);
-    /* setProductListLength(productList.length); */
 
-  }
 
 
 
@@ -122,10 +122,20 @@ export default function ShopDetailOverlay() {
 
   /* TODO: When out of Product range you have to deactivate the Direction Button */
 
+
+  useEffect(() => {
+    console.log("ActiveProductIndex:", activeProductIndex);
+    setLastDetailsActive((prev) => ({
+      ...prev,
+      lastActiveProductIndex: activeProductIndex,
+    }));
+  }, [activeProductIndex]);
+
+
   function moveRefLeft() {
 
-    setActiveProductIndex(()=>activeProductIndex - 1);
-    console.log(activeProductIndex);
+    setActiveProductIndex((prev)=>prev - 1);
+   
 
    
     if (detailsActive === "tl1") {
@@ -146,10 +156,13 @@ export default function ShopDetailOverlay() {
 
 
   }
+
+  
+
   function moveRefRight() {
 
-     setActiveProductIndex(()=> activeProductIndex + 1);
-      console.log(activeProductIndex);
+     setActiveProductIndex((prev)=> prev + 1);
+   
 
       if(detailsActive === 'tl1'){
         gsap.to(activeElementRef.position, {
@@ -165,8 +178,11 @@ export default function ShopDetailOverlay() {
            ease: "power4",
          });
       }
-
+      
   }
+
+
+ 
 
   return (
     <>
