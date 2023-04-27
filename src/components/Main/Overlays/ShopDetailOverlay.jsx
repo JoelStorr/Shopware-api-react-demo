@@ -8,6 +8,10 @@ import { getProductList } from "../../../helper/shopware api/apiProductHelper";
 
 export default function ShopDetailOverlay() {
   const [detailsActive, setDetailsActive] = useState(false);
+  const [lastDetailsActive, setLastDetailsActive] = useState({
+    lastDetails: null,
+    lastActiveProductIndex: null,
+  });
   const [activeElementRef, setActiveElementRef] = useState(null);
   const [productList, setProductList] = useState([]);
 /*   const [productListLength, setProductListLength] = useState(null); */
@@ -20,20 +24,17 @@ export default function ShopDetailOverlay() {
       (state) => state,
       (state) => {
         if (state.tl1.isRunning) {
-          /* console.log("running element one detail");
-          console.log(state.tl1.groupRef); */
           setDetailsActive("tl1");
           setActiveElementRef(state.tl1.groupRef);
           setCategoryID(state.tl1.categoryID);
-      /*     activeElementRef.position.z + (0.5 * activeProductIndex) */
           setActiveProductIndex(0);
         }else if(state.tl2.isRunning){
-          /* console.log("running element two detail"); */
           setDetailsActive("tl2");
           setActiveElementRef(state.tl2.groupRef);
           setCategoryID(state.tl2.categoryID);
           setActiveProductIndex(0)
         } else if (!state.tl1.isRunning && !state.tl2.isRunning) {
+          
           setDetailsActive(false);
         }
       }
@@ -61,6 +62,19 @@ export default function ShopDetailOverlay() {
           return Promise.resolve(val);
         })
         .then((val2) => {
+          console.log('Details Check: ')
+          console.log(detailsActive);
+          if (
+            detailsActive === "tl1" ||
+            detailsActive === "tl2" ||
+            detailsActive === "tl3"
+          ) {
+            setLastDetailsActive({
+              lastDetails: detailsActive,
+              lastActiveProductIndex: activeProductIndex,
+            });
+          }
+
 
          /*  console.log('Fetch Val:', val2) */
           
@@ -74,13 +88,21 @@ export default function ShopDetailOverlay() {
         
     }else{
       if(activeElementRef){
-        console.log('Offset - Runner');
-        gsap.to(activeElementRef.position,{
-          duration: 1,
-          z: activeElementRef.position.z + (0.5 * activeProductIndex),
-          ease: "power4"
-        
-        })
+        console.log('Last detail info:', lastDetailsActive);
+        if(lastDetailsActive === 'tl1'){
+          console.log('Offset - Runner');
+          gsap.to(activeElementRef.position,{
+            duration: 1,
+            z: activeElementRef.position.z + (0.5 * activeProductIndex),
+            ease: "power4"
+          })
+        }else if(lastDetailsActive === 'tl2'){
+          gsap.to(activeElementRef.position, {
+            duration: 1,
+            z: activeElementRef.position.z + (0.8 * activeProductIndex),
+            ease: "power4",
+          });
+        }
       }
     }
   }, [detailsActive]);
