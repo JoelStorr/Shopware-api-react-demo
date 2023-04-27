@@ -36,8 +36,6 @@ export default function Navigation() {
       setTl1CategoryId(categories[0].children[0].id);
       setTl2CategoryId(categories[0].children[1].id);
       setTl3CategoryId(categories[0].children[2].id);
-   /*    console.log('------------ Sorted Data --------------')
-      console.log(categories); */
     }
   },[categories])
 
@@ -49,10 +47,6 @@ export default function Navigation() {
   function handleMouseOut (el){
     setIsHovering(false);
   }
-
-
-
-
 
 
  //TODO: Match the CLiked ID of Subcategoreis to the Coresponding Portion of the 3D view
