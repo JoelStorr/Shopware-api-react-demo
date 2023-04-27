@@ -20,15 +20,15 @@ export default function ShopDetailOverlay() {
       (state) => state,
       (state) => {
         if (state.tl1.isRunning) {
-          console.log("running element one detail");
-          console.log(state.tl1.groupRef);
+          /* console.log("running element one detail");
+          console.log(state.tl1.groupRef); */
           setDetailsActive("tl1");
           setActiveElementRef(state.tl1.groupRef);
           setCategoryID(state.tl1.categoryID);
       /*     activeElementRef.position.z + (0.5 * activeProductIndex) */
-           setActiveProductIndex(0);
+          setActiveProductIndex(0);
         }else if(state.tl2.isRunning){
-          console.log("running element two detail");
+          /* console.log("running element two detail"); */
           setDetailsActive("tl2");
           setActiveElementRef(state.tl2.groupRef);
           setCategoryID(state.tl2.categoryID);
@@ -62,7 +62,7 @@ export default function ShopDetailOverlay() {
         })
         .then((val2) => {
 
-          console.log('Fetch Val:', val2)
+         /*  console.log('Fetch Val:', val2) */
           
   /*         setProductListLength(()=>{return val2.length}); */
           return;
@@ -72,6 +72,16 @@ export default function ShopDetailOverlay() {
           console.log(productList[0])
         }).catch(e=>console.error(e));
         
+    }else{
+      if(activeElementRef){
+        console.log('Offset - Runner');
+        gsap.to(activeElementRef.position,{
+          duration: 1,
+          z: activeElementRef.position.z + (0.5 * activeProductIndex),
+          ease: "power4"
+        
+        })
+      }
     }
   }, [detailsActive]);
 
