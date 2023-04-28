@@ -4,7 +4,8 @@ import Navigation from './nav/Navigation';
 
 import './Header.scss';
 
-
+import Login from './login/Login';
+import Register from './Register/Register';
 
 
 export default function MainHeader(){
@@ -19,8 +20,8 @@ export default function MainHeader(){
 
                 </div>
                 <div className="header--signin">
-                    <button>LogIn</button>
-                    <button>Register</button>
+                    <Login />
+                    <Register />
                 </div> 
 
             </div>
