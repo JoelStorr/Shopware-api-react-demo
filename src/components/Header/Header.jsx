@@ -5,7 +5,7 @@ import Navigation from './nav/Navigation';
 import './Header.scss';
 
 import Login from './login/Login';
-import Register from './Register/Register';
+import Register from './register/Register';
 
 
 export default function MainHeader(){

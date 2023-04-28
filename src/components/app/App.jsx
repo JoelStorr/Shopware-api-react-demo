@@ -11,6 +11,7 @@ import MainHeader from '../Header/Header';
 import Main from '../Main/Main';
 
 import ShopDetailOverlay from '../Main/Overlays/ShopDetailOverlay';
+import RegisterPopUp from '../Header/Register/RegisterPopUp';
 
 
 
@@ -25,6 +26,7 @@ function App() {
       <MainHeader />
       {/* Detail Overlay */}
       <ShopDetailOverlay />
+      <RegisterPopUp />
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>
