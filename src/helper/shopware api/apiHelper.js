@@ -16,7 +16,7 @@ export class RequestType{
 
 
 
-export default async function apiRequest(requestType, categoryID = null, login = null, register = null) {
+export default async function apiRequest(requestType, {categoryID = null, login = null, register = null}) {
 
   let data;
 
@@ -45,7 +45,7 @@ export default async function apiRequest(requestType, categoryID = null, login =
 
   /* NOTE: Register User */
   if( requestType === 5 && register != null){
-
+    data = await registerUser();
   }else if ((requestType === 5 && register === null)) {
     console.error("Pleas provide proper Registration Credentials");
     return;
@@ -106,10 +106,20 @@ async function registerUser(){
     method: "post",
     url: `${shopwareDomain}account/register`,
     headers: { "sw-access-key": shopwareKey },
-    data:{
-      email: '',
-      password: '',
-    }
+    data: {
+      salutationId: "32d6c76401d749d2b025eba20a511e54",
+      firstName: "Alice",
+      lastName: "Apple",
+      email: "alice.apple@example.com",
+      password: "ilovefruits",
+      storefrontUrl: "http://localhost",
+      billingAddress: {
+        street: "Apple Alley 42",
+        zipcode: "1234-5",
+        city: "Appleton",
+        countryId: "de7ca8cbb8934e63bed964f8d592d501",
+      },
+    },
   }).then((res) => {
     return res.data.elements;
   });
