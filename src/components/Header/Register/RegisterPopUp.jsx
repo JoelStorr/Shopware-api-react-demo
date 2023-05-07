@@ -3,12 +3,16 @@ import React, { useEffect, useState } from "react";
 import StoreApiRequest from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
 
+
+/* TODO: Set Context Token to User Store */
+
 export default function RegisterPopUp() {
   const [pronounce, setPronounce] = useState([]);
   const [countries, setCountries] = useState([]);
   const [registerForm, setRegisterForm] = useState({
     pronounce: null,
     countryID: null,
+    contextToken: null,
     firstName: "",
     lastName: "",
     email: "",
@@ -19,9 +23,10 @@ export default function RegisterPopUp() {
   /* TODO: See why Prononce Broke */
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
+      console.log(res)
       setPronounce(res);
       setRegisterForm((prev) => {
-        return { ...prev, pronounce: res[0].salutationKey };
+        return { ...prev, pronounce: res[0].id };
       });
     });
     StoreApiRequest.getCountries().then((res) => {
@@ -31,6 +36,12 @@ export default function RegisterPopUp() {
       });
     });
 
+    StoreApiRequest.getContext().then((res)=>(
+      setRegisterForm((prev) => {
+        return { ...prev, contextToken: res.token };
+      })
+    ));
+
     /* getExtraFormInfo(); */
   }, []);
 
@@ -39,7 +50,7 @@ export default function RegisterPopUp() {
     useEffect(()=>{console.log(registerForm)},[registerForm])
 
   function formHandler(e) {
-    /* console.log(e.target.id); */
+    console.log(e.target.value);
 
     switch (e.target.id) {
       case "pronounce-select":
@@ -86,7 +97,7 @@ export default function RegisterPopUp() {
     ) {
       /* TODO: Fix Frontend Token Error */
         StoreApiRequest.registerUser(registerForm)
-          .then((res) => console.log(res))
+          .then((res) => console.log(res); )
           .catch((e) => {
             console.error(e);
           });
@@ -105,7 +116,7 @@ export default function RegisterPopUp() {
           Pronounce:
           <select onChange={formHandler} id="pronounce-select">
             {pronounce.map((val) => (
-              <option value={val.salutationKey} key={val.salutationKey}>
+              <option value={val.id} key={val.id}>
                 {val.displayName}
               </option>
             ))}
