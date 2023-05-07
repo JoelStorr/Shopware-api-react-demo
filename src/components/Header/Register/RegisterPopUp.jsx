@@ -20,7 +20,7 @@ export default function RegisterPopUp() {
     checkPassword: "",
   });
 
-  /* TODO: See why Prononce Broke */
+  
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
       console.log(res)
@@ -95,9 +95,8 @@ export default function RegisterPopUp() {
     if (
       true
     ) {
-      /* TODO: Fix Frontend Token Error */
         StoreApiRequest.registerUser(registerForm)
-          .then((res) => console.log(res); )
+          .then((res) => console.log(res) )
           .catch((e) => {
             console.error(e);
           });
