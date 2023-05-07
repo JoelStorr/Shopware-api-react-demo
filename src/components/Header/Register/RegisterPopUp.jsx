@@ -5,8 +5,10 @@ import "./RegisterPopUp.scss";
 
 export default function RegisterPopUp() {
   const [pronounce, setPronounce] = useState([]);
+  const [countries, setCountries] = useState([]);
   const [registerForm, setRegisterForm] = useState({
     pronounce: null,
+    countryID: null,
     firstName: "",
     lastName: "",
     email: "",
@@ -18,12 +20,26 @@ export default function RegisterPopUp() {
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
       setPronounce(res);
-      setRegisterForm((prev)=>{return { ...prev, pronounce: res[0].salutationKey };})
-    }).catch((e)=>{console.errror(e)});
+      setRegisterForm((prev) => {
+        return { ...prev, pronounce: res[0].salutationKey };
+      });
+    });
+    StoreApiRequest.getCountries().then((res) => {
+      setCountries(res);
+      setRegisterForm((prev) => {
+        return { ...prev, countryID: res[0].id };
+      });
+    });
+
+    /* getExtraFormInfo(); */
   }, []);
 
+  
+
+    useEffect(()=>{console.log(registerForm)},[registerForm])
+
   function formHandler(e) {
-    console.log(e.target.id);
+    /* console.log(e.target.id); */
 
     switch (e.target.id) {
       case "pronounce-select":
@@ -64,32 +80,27 @@ export default function RegisterPopUp() {
 
   function formSender(e) {
     e.preventDefault();
+    console.log('Run form function')
     if (
-      registerForm.pronounce != null &&
-      registerForm.firstName != "" &&
-      registerForm.lastName != "" &&
-      registerForm.email != "" &&
-      registerForm.password != "" &&
-      registerForm.checkPassword != ""
+      true
     ) {
-      ()=>{
-        StoreApiRequest.registerUser({})
-          .then((res)=>console.log(res))
-          .catch((e)=>{console.error(e)});
-      }
-
-    }else{
-      console.error('Pleas enter form Correctly');
-      console.log(registerForm)
+      /* TODO: Fix Frontend Token Error */
+        StoreApiRequest.registerUser(registerForm)
+          .then((res) => console.log(res))
+          .catch((e) => {
+            console.error(e);
+          });
+    
+    } else {
+      console.error("Pleas enter form Correctly");
+      console.log(registerForm);
     }
   }
-
-  console.log("Run PopUp");
 
   return (
     <div className="register-popup">
       <h1>Register</h1>
-      <form onSubmit={(e)=>formSender(e)}>
+      <form onSubmit={(e) => formSender(e)}>
         <label>
           Pronounce:
           <select onChange={formHandler} id="pronounce-select">

@@ -54,20 +54,31 @@ export default class StoreApiRequest {
           street: "Apple Alley 42",
           zipcode: "1234-5",
           city: "Appleton",
-          countryId: "de7ca8cbb8934e63bed964f8d592d501",
+          countryId: userObj.countryId,
         },
       },
     }).then((res) => {
       return res.data.elements;
-    });
+    }).catch((e)=>{console.error(e)});
   }
-  static async salutation() {
+   static async salutation() {
     return axios({
       method: "post",
       url: `${shopwareDomain}salutation`,
+      headers: { "sw-access-key": shopwareKey }
+    }).then((res) => {
+      return res.data.elements;
+    }).catch(e=>{});
+  };
+
+  static async getCountries(){
+    return axios({
+      method: "post",
+      url: `${shopwareDomain}country`,
       headers: { "sw-access-key": shopwareKey },
     }).then((res) => {
       return res.data.elements;
     });
   }
+
 }
