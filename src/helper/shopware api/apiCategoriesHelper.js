@@ -1,9 +1,9 @@
 import { useState } from "react";
 
-import apiRequest, { RequestType } from "./apiHelper";
+import apiRequest, { StoreApiRequest } from "./apiHelper";
 
 export default async function apiCategoriesHelper() {
-  let data = await apiRequest(RequestType.categories);
+  let data = await StoreApiRequest.categories();
 
   let orderData = await orderNav(data);
   let fullySorted = sortSubCategories(orderData);
