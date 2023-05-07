@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import apiRequest, {
-  RequestType,
-} from "../../../helper/shopware api/apiHelper";
+import StoreApiRequest from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
 
 export default function RegisterPopUp() {
@@ -16,11 +14,12 @@ export default function RegisterPopUp() {
     checkPassword: "",
   });
 
+  /* TODO: See why Prononce Broke */
   useEffect(() => {
-    apiRequest(RequestType.salutation, {}).then((res) => {
+    StoreApiRequest.salutation().then((res) => {
       setPronounce(res);
       setRegisterForm((prev)=>{return { ...prev, pronounce: res[0].salutationKey };})
-    });
+    }).catch((e)=>{console.errror(e)});
   }, []);
 
   function formHandler(e) {
@@ -73,7 +72,12 @@ export default function RegisterPopUp() {
       registerForm.password != "" &&
       registerForm.checkPassword != ""
     ) {
-      apiRequest(RequestType.register, {register : registerForm}).then((res)=>console.log(res))
+      ()=>{
+        StoreApiRequest.registerUser({})
+          .then((res)=>console.log(res))
+          .catch((e)=>{console.error(e)});
+      }
+
     }else{
       console.error('Pleas enter form Correctly');
       console.log(registerForm)

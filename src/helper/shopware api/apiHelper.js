@@ -4,7 +4,7 @@ const shopwareDomain = "http://localhost/store-api/";
 const shopwareKey = "SWSCWDHDQLQ4UM9YZZZIEUXLBQ";
 
 
-export class StoreApiRequest {
+export default class StoreApiRequest {
   static async getCategories() {
     return axios({
       method: "post",
@@ -14,6 +14,7 @@ export class StoreApiRequest {
       return res.data.elements;
     });
   }
+  /* TODO: Make Indevidual Product Request */
   static async product() {
     /* TODO: Add Function */
   }
@@ -27,7 +28,7 @@ export class StoreApiRequest {
     });
   }
   /* TODO: Change LogIn Function */
-  static async login() {
+  static async login(loginObj) {
     return axios({
       method: "post",
       url: `${shopwareDomain}product-listing/${categoryID}`,
