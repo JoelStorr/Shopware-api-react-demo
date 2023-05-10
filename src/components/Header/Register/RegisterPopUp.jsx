@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 
 import StoreApiRequest from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
+import { useUILogic } from "../../../store/store";
 
 /* TODO: Set Context Token to User Store */
 /* TODO: Set Country Data on Dropdown with Adress Info */
 /* TODO: Make two Step Sign up Process */
 /* TODO: Front End Form Validation */
 /* TODO: Make sign up impossible until form is propperly fild in */
+/* TODO: Fix form Placeholder Text */
 
-export default function RegisterPopUp() {
+export default function RegisterPopUp(props) {
+  const [popUpShown, setPopUpShown] = useState(false)
   const [pronounce, setPronounce] = useState([]);
   const [countries, setCountries] = useState([]);
   const [signUpStage, setSignupStage] = useState(1);
@@ -26,6 +29,8 @@ export default function RegisterPopUp() {
     city: "",
     countryID: null,
   });
+
+  const popUpSwitch = useUILogic((state) => state.setRegistrationPopUp);
 
   /* NOTE:Fetches Data */
   useEffect(() => {
@@ -50,7 +55,16 @@ export default function RegisterPopUp() {
       })
     );
 
-    /* getExtraFormInfo(); */
+    const unsubScribeUIStore = useUILogic.subscribe(
+      (state) => state.showRegistrationPopUp,
+      (showRegistrationPopUp) => setPopUpShown(showRegistrationPopUp)
+    );
+
+
+    return ()=>{
+      unsubScribeUIStore();
+    }
+
   }, []);
 
   /* NOTE: Dev Check to Print on each change */
@@ -121,16 +135,21 @@ export default function RegisterPopUp() {
 
   /* NOTE: Handles Stages and Form Submissions */
   function formSender(e, stage) {
-    e.preventDefault();
+    if(e != null){
+      e.preventDefault();
+    }
     console.log("Run form function");
     if (stage == 1) {
       setSignupStage(2);
     } else if (stage == 2 && signUpStage == 2) {
+      setSignupStage(3);
       StoreApiRequest.registerUser(registerForm)
         .then((res) => console.log(res))
         .catch((e) => {
           console.error(e);
         });
+    }else if(stage == 3){
+      popUpSwitch();
     } else {
       console.error("Pleas enter form Correctly");
       console.log(registerForm);
@@ -143,112 +162,123 @@ export default function RegisterPopUp() {
   }
 
   return (
-    <div className="register-popup">
-      <h1>Register</h1>
-      <h2>Personal Information</h2>
+    <>
+      {popUpShown && (
+        <div className="register-popup">
+          <h1>Register</h1>
+          <button onClick={() => formSender(null, 3)}>X</button>
 
-      {signUpStage == 1 && (
-        <div className="register-popup-stage-one">
-          <h3>Personal Information</h3>
-          <form onSubmit={(e) => formSender(e, 1)}>
-            <label>
-              Pronounce:
-              <select onChange={formHandler} id="pronounce-select">
-                {pronounce.map((val) => (
-                  <option value={val.id} key={val.id}>
-                    {val.displayName}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <br />
-            <label>
-              First Name:
-              <input
-                type="text"
-                id="first-name"
-                value={registerForm.firstName}
-                onChange={formHandler}
-              ></input>
-            </label>
-            <label>
-              Last Name:
-              <input
-                type="text"
-                id="last-name"
-                value={registerForm.lastName}
-                onChange={formHandler}
-              ></input>
-            </label>
-            <br />
-            <label>
-              Email:
-              <input
-                type="text"
-                id="email"
-                value={registerForm.email}
-                onChange={formHandler}
-              ></input>
-            </label>
-            <br />
-            <label htmlFor="password">
-              Password:
-              <input
-                type="text"
-                id="password"
-                value={registerForm.password}
-                onChange={formHandler}
-              ></input>
-            </label>
-            <label htmlFor="password">
-              Check Password:
-              <input
-                type="text"
-                id="check-password"
-                value={registerForm.checkPassword}
-                onChange={formHandler}
-              ></input>
-            </label>
-            <br />
-            <button type="submit">Step 2</button>
-          </form>
+          {signUpStage == 1 && (
+            <div className="register-popup-stage-one">
+              <h3>Personal Information</h3>
+              <form onSubmit={(e) => formSender(e, 1)}>
+                <label>
+                  Pronounce:
+                  <select onChange={formHandler} id="pronounce-select">
+                    {pronounce.map((val) => (
+                      <option value={val.id} key={val.id}>
+                        {val.displayName}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <br />
+                <label>
+                  First Name:
+                  <input
+                    type="text"
+                    id="first-name"
+                    value={registerForm.firstName}
+                    onChange={formHandler}
+                  ></input>
+                </label>
+                <label>
+                  Last Name:
+                  <input
+                    type="text"
+                    id="last-name"
+                    value={registerForm.lastName}
+                    onChange={formHandler}
+                  ></input>
+                </label>
+                <br />
+                <label>
+                  Email:
+                  <input
+                    type="text"
+                    id="email"
+                    value={registerForm.email}
+                    onChange={formHandler}
+                  ></input>
+                </label>
+                <br />
+                <label htmlFor="password">
+                  Password:
+                  <input
+                    type="text"
+                    id="password"
+                    value={registerForm.password}
+                    onChange={formHandler}
+                  ></input>
+                </label>
+                <label htmlFor="password">
+                  Check Password:
+                  <input
+                    type="text"
+                    id="check-password"
+                    value={registerForm.checkPassword}
+                    onChange={formHandler}
+                  ></input>
+                </label>
+                <br />
+                <button type="submit">Step 2</button>
+              </form>
+            </div>
+          )}
+
+          {signUpStage == 2 && (
+            <div className="register-popup-stage-two">
+              <form onSubmit={(e) => formSender(e, 2)}>
+                <label>
+                  Country:
+                  <select onChange={formHandler} id="country-select">
+                    {countries.map((val) => (
+                      <option value={val.id} key={val.id}>
+                        {val.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <br />
+                <label>
+                  Street
+                  <input type="text" id="street" />
+                </label>
+                <br />
+                <label>
+                  Zipcode:
+                  <input type="text" id="zipcode" />
+                </label>
+                <br />
+                <label>
+                  City:
+                  <input type="text" id="city" />
+                </label>
+                <br />
+                <button onClick={() => onChangeStage(1)}>Back 1</button>
+                <input type="submit" value="Send" />
+              </form>
+            </div>
+          )}
+          {signUpStage == 3 && (
+            <div className="register-popup-stage-three">
+              <h2>Thanks for Signing Up</h2>
+              <h4>You can now Start shopping</h4>
+              <button onClick={() => formSender(null, 3)}>Close</button>
+            </div>
+          )}
         </div>
       )}
-
-      {signUpStage == 2 && (
-        <div className="register-popup-stage-one">
-          <form onSubmit={(e) => formSender(e, 2)}>
-            <label>
-              Country:
-              <select onChange={formHandler} id="country-select">
-                {countries.map((val) => (
-                  <option value={val.id} key={val.id}>
-                    {val.name}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <br />
-            <label>
-              Street
-              <input type="text" id="street" />
-            </label>
-            <br />
-            <label>
-              Zipcode:
-              <input type="text" id="zipcode" />
-            </label>
-            <br />
-            <label>
-              City:
-              <input type="text" id="city" />
-            </label>
-            <br />
-            <button onClick={() => onChangeStage(1)}>Back 1</button>
-            <input type="submit" value="Send" />
-          </form>
-        </div>
-      )}
-    </div>
+    </>
   );
 }

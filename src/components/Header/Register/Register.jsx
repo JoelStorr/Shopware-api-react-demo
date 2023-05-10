@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
+import { useUILogic } from '../../../store/store';
 
 
 export default function Register() {
 
-    const [popUp, setPopUp] = useState(false);
+   const popUpSwitch = useUILogic((state) => state.setRegistrationPopUp)
+   
     
 
 
 
   return (
-    <button>Register</button>
+    <button onClick={()=>{popUpSwitch()}}>Register</button>
   )
 }
