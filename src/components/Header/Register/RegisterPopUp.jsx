@@ -27,6 +27,7 @@ export default function RegisterPopUp() {
     countryID: null,
   });
 
+  /* NOTE:Fetches Data */
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
       console.log(res);
@@ -37,6 +38,7 @@ export default function RegisterPopUp() {
     });
     StoreApiRequest.getCountries().then((res) => {
       setCountries(res);
+      console.log(res);
       setRegisterForm((prev) => {
         return { ...prev, countryID: res[0].id };
       });
@@ -51,10 +53,12 @@ export default function RegisterPopUp() {
     /* getExtraFormInfo(); */
   }, []);
 
+  /* NOTE: Dev Check to Print on each change */
   useEffect(() => {
     console.log(registerForm);
   }, [registerForm]);
 
+  /* NOTE: Handles data assignment on form Change */
   function formHandler(e) {
     console.log(e.target.value);
 
@@ -89,12 +93,33 @@ export default function RegisterPopUp() {
           return { ...prev, checkPassword: e.target.value };
         });
         break;
+      case "country-select":
+        setRegisterForm((prev) => {
+          return { prev, countryID: e.target.value };
+        });
+        break;
+      case "street":
+        setRegisterForm((prev) => {
+          return { ...prev, street: e.target.value };
+        });
+        break;
+      case "zipcode":
+        setRegisterForm((prev) => {
+          return { ...prev, zipcode: e.target.value };
+        });
+        break;
+      case "city":
+        setRegisterForm((prev) => {
+          return { ...prev, city: e.target.vale };
+        });
+        break;
       default:
         console.error("Probably Typo in form type");
         break;
     }
   }
 
+  /* NOTE: Handles Stages and Form Submissions */
   function formSender(e, stage) {
     e.preventDefault();
     console.log("Run form function");
@@ -112,9 +137,9 @@ export default function RegisterPopUp() {
     }
   }
 
+  /* NOTE: For Back Change on form */
   function onChangeStage(stage) {
     setSignupStage(stage);
-    console.log(signUpStage);
   }
 
   return (
@@ -128,7 +153,7 @@ export default function RegisterPopUp() {
           <form onSubmit={(e) => formSender(e, 1)}>
             <label>
               Pronounce:
-              <select onChange={formHandler} id="pronounce-select" required>
+              <select onChange={formHandler} id="pronounce-select">
                 {pronounce.map((val) => (
                   <option value={val.id} key={val.id}>
                     {val.displayName}
@@ -144,7 +169,6 @@ export default function RegisterPopUp() {
                 id="first-name"
                 value={registerForm.firstName}
                 onChange={formHandler}
-                required
               ></input>
             </label>
             <label>
@@ -154,7 +178,6 @@ export default function RegisterPopUp() {
                 id="last-name"
                 value={registerForm.lastName}
                 onChange={formHandler}
-                required
               ></input>
             </label>
             <br />
@@ -165,7 +188,6 @@ export default function RegisterPopUp() {
                 id="email"
                 value={registerForm.email}
                 onChange={formHandler}
-                required
               ></input>
             </label>
             <br />
@@ -176,7 +198,6 @@ export default function RegisterPopUp() {
                 id="password"
                 value={registerForm.password}
                 onChange={formHandler}
-                required
               ></input>
             </label>
             <label htmlFor="password">
@@ -186,7 +207,6 @@ export default function RegisterPopUp() {
                 id="check-password"
                 value={registerForm.checkPassword}
                 onChange={formHandler}
-                required
               ></input>
             </label>
             <br />
@@ -199,14 +219,29 @@ export default function RegisterPopUp() {
         <div className="register-popup-stage-one">
           <form onSubmit={(e) => formSender(e, 2)}>
             <label>
-              Pronounce:
-              <select onChange={formHandler} id="pronounce-select">
-                {pronounce.map((val) => (
+              Country:
+              <select onChange={formHandler} id="country-select">
+                {countries.map((val) => (
                   <option value={val.id} key={val.id}>
-                    {val.displayName}
+                    {val.name}
                   </option>
                 ))}
               </select>
+            </label>
+            <br />
+            <label>
+              Street
+              <input type="text" id="street" />
+            </label>
+            <br />
+            <label>
+              Zipcode:
+              <input type="text" id="zipcode" />
+            </label>
+            <br />
+            <label>
+              City:
+              <input type="text" id="city" />
             </label>
             <br />
             <button onClick={() => onChangeStage(1)}>Back 1</button>
