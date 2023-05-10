@@ -55,9 +55,9 @@ export default class StoreApiRequest {
         password: userObj.password,
         storefrontUrl: "http://127.0.0.1:5173",
         billingAddress: {
-          street: "Apple Alley 42",
-          zipcode: "1234-5",
-          city: "Appleton",
+          street: userObj.street,
+          zipcode: userObj.zipcode,
+          city: userObj.city,
           countryId: userObj.countryID,
         },
       },
