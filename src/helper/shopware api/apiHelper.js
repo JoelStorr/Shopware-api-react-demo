@@ -63,8 +63,8 @@ export default class StoreApiRequest {
       },
     })
       .then((res) => {
-        console.log(res)
-        return res
+        console.log(res);
+        return res;
       })
       .catch((e) => {
         console.error(e);

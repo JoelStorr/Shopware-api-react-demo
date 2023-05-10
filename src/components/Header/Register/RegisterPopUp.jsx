@@ -109,7 +109,7 @@ export default function RegisterPopUp(props) {
         break;
       case "country-select":
         setRegisterForm((prev) => {
-          return { prev, countryID: e.target.value };
+          return { ...prev, countryID: e.target.value };
         });
         break;
       case "street":
@@ -124,7 +124,7 @@ export default function RegisterPopUp(props) {
         break;
       case "city":
         setRegisterForm((prev) => {
-          return { ...prev, city: e.target.vale };
+          return { ...prev, city: e.target.value };
         });
         break;
       default:
@@ -149,6 +149,7 @@ export default function RegisterPopUp(props) {
           console.error(e);
         });
     }else if(stage == 3){
+      setSignupStage(1);
       popUpSwitch();
     } else {
       console.error("Pleas enter form Correctly");
@@ -252,17 +253,32 @@ export default function RegisterPopUp(props) {
                 <br />
                 <label>
                   Street
-                  <input type="text" id="street" />
+                  <input
+                    type="text"
+                    id="street"
+                    value={registerForm.street}
+                    onChange={formHandler}
+                  />
                 </label>
                 <br />
                 <label>
                   Zipcode:
-                  <input type="text" id="zipcode" />
+                  <input
+                    type="text"
+                    id="zipcode"
+                    value={registerForm.zipcode}
+                    onChange={formHandler}
+                  />
                 </label>
                 <br />
                 <label>
                   City:
-                  <input type="text" id="city" />
+                  <input
+                    type="text"
+                    id="city"
+                    value={registerForm.city}
+                    onChange={formHandler}
+                  />
                 </label>
                 <br />
                 <button onClick={() => onChangeStage(1)}>Back 1</button>
