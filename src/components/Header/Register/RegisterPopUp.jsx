@@ -4,14 +4,15 @@ import StoreApiRequest, {
   devApiHelper,
 } from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
-import { useUILogic, useStoreUser } from "../../../store/store";
+import {  useStoreUser } from "../../../store/store";
+import useUILogic from "../../../store/uiStore";
 
 /* TODO: Front End Form Validation */
 /* TODO: Make sign up impossible until form is propperly fild in */
 /* TODO: Fix form Placeholder Text */
 
 export default function RegisterPopUp(props) {
-  const [popUpShown, setPopUpShown] = useState(false);
+  /* const [popUpShown, setPopUpShown] = useState(false); */
   const [pronounce, setPronounce] = useState([]);
   const [countries, setCountries] = useState([]);
   const [signUpStage, setSignupStage] = useState(1);

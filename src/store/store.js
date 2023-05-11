@@ -54,22 +54,7 @@ export const useTlStore = create(
 
 
 
-export const useUILogic = create(
-  subscribeWithSelector((set) => ({
-    /* NOTE: Login UI */
-    showLoginPopUp: false,
-    setLoginPopUp: () =>
-      set((state) => ({ ...state, showLoginPopUp: !state.showLoginPopUp })),
 
-    /* NOTE: Register UI */
-    showRegistrationPopUp: false,
-    setRegistrationPopUp: () =>
-      set((state) => ({
-        ...state,
-        showRegistrationPopUp: !state.showRegistrationPopUp,
-      })),
-  }))
-);
 
 
 export const useStoreUser = create(

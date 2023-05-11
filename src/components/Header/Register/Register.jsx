@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useUILogic } from '../../../store/store';
+import  useUILogic  from '../../../store/uiStore';
 
 
 export default function Register() {

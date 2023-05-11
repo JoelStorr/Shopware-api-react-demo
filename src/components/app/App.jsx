@@ -1,21 +1,49 @@
-// Modules
-import { useState } from 'react'
+/* NOTE: Node Modules */
+import React, { useState, useEffect } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Environment, OrbitControls } from '@react-three/drei'
 import {useControls} from 'leva';
 
 
-// Custom
+/* NOTE: Custom Imports */
 import './App.scss';
 import MainHeader from '../Header/Header';
 import Main from '../Main/Main';
+import BasePopUp from '../Main/PopUps/BasePopUp';
 
 import ShopDetailOverlay from '../Main/Overlays/ShopDetailOverlay';
 import RegisterPopUp from '../Header/Register/RegisterPopUp';
+/* NOTE: Store Import */
+import  useUILogic  from "./../../store/uiStore";
 
 
 
 function App() {
+
+  /* NOTE: Handle PopUp Shown */
+  const [popUpShown, setPopUpShown] = useState(null);
+  
+  
+    
+  
+   useEffect(()=>{
+     let removeUISub = useUILogic.subscribe(
+       (state) => {
+         console.log('State Check:',state.showPopUp);
+         return state.showPopUp;
+       },
+       (showPopUp) => {
+         console.info("Run Show Popup", showPopUp);
+         setPopUpShown(showPopUp);
+       }
+     );
+
+     return ()=>{
+      removeUISub();
+     }
+   },[])
+  
+
 
 
   //NOTE: Change Leva route for Production
@@ -24,9 +52,8 @@ function App() {
   return (
     <>
       <MainHeader />
-      {/* Detail Overlay */}
       <ShopDetailOverlay />
-      <RegisterPopUp />
+      {popUpShown && (<BasePopUp />)}
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>
