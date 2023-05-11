@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from "react";
 
-import StoreApiRequest, {devApiHelper} from "../../../helper/shopware api/apiHelper";
+import StoreApiRequest, {
+  devApiHelper,
+} from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
 import { useUILogic, useStoreUser } from "../../../store/store";
 
-/* TODO: Set Context Token to User Store */
-/* TODO: Set Country Data on Dropdown with Adress Info */
-/* TODO: Make two Step Sign up Process */
 /* TODO: Front End Form Validation */
 /* TODO: Make sign up impossible until form is propperly fild in */
 /* TODO: Fix form Placeholder Text */
 
 export default function RegisterPopUp(props) {
-  const [popUpShown, setPopUpShown] = useState(false)
+  const [popUpShown, setPopUpShown] = useState(false);
   const [pronounce, setPronounce] = useState([]);
   const [countries, setCountries] = useState([]);
   const [signUpStage, setSignupStage] = useState(1);
@@ -38,7 +37,6 @@ export default function RegisterPopUp(props) {
   /* NOTE: Fetches Data */
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
-      /* console.log(res); */
       setPronounce(res);
       setRegisterForm((prev) => {
         return { ...prev, pronounce: res[0].id };
@@ -46,7 +44,7 @@ export default function RegisterPopUp(props) {
     });
     StoreApiRequest.getCountries().then((res) => {
       setCountries(res);
-      /* console.log(res); */
+
       setRegisterForm((prev) => {
         return { ...prev, countryID: res[0].id };
       });
@@ -63,27 +61,21 @@ export default function RegisterPopUp(props) {
       (showRegistrationPopUp) => setPopUpShown(showRegistrationPopUp)
     );
 
-      /* NOTE: Dev Helper functions */
-      devApiHelper.loginCheck().then((res)=>{return});
+    /* NOTE: Dev Helper functions */
+    devApiHelper.loginCheck().then((res) => {
+      return;
+    });
 
-
-
-
-    return ()=>{
+    return () => {
       unsubScribeUIStore();
-    }
-
+    };
   }, []);
 
   /* NOTE: Dev Check to Print on each change */
-  useEffect(() => {
-    /* console.log(registerForm); */
-  }, [registerForm]);
+  useEffect(() => {}, [registerForm]);
 
   /* NOTE: Handles data assignment on form Change */
   function formHandler(e) {
-    /* console.log(e.target.value); */
-
     switch (e.target.id) {
       case "pronounce-select":
         setRegisterForm((prev) => {
@@ -143,10 +135,10 @@ export default function RegisterPopUp(props) {
 
   /* NOTE: Handles Stages and Form Submissions */
   function formSender(e, stage) {
-    if(e != null){
+    if (e != null) {
       e.preventDefault();
     }
-    /* console.log("Run form function"); */
+
     if (stage == 1) {
       setSignupStage(2);
     } else if (stage == 2 && signUpStage == 2) {
@@ -157,13 +149,13 @@ export default function RegisterPopUp(props) {
           setUserContextToken(res.headers["sw-context-token"]);
           /* NOTE: Dev Helper functions */
           devApiHelper
-            .loginCheck(res.headers['sw-context-token'])
+            .loginCheck(res.headers["sw-context-token"])
             .then((res) => console.info("User signed in:", res));
         })
         .catch((e) => {
           console.error(e);
         });
-    }else if(stage == 3){
+    } else if (stage == 3) {
       setSignupStage(1);
       popUpSwitch();
       setRegisterForm((prev) => ({
