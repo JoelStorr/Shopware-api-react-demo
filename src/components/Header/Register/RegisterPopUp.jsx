@@ -19,6 +19,7 @@ export default function RegisterPopUp(props) {
   const [registerForm, setRegisterForm] = useState({
     pronounce: null,
     contextToken: null,
+    countryID: null,
     firstName: "",
     lastName: "",
     email: "",
@@ -27,7 +28,6 @@ export default function RegisterPopUp(props) {
     street: "",
     zipcode: "",
     city: "",
-    countryID: null,
   });
 
   const popUpSwitch = useUILogic((state) => state.setRegistrationPopUp);
@@ -35,7 +35,7 @@ export default function RegisterPopUp(props) {
     (state) => state.setUserContectToken
   );
 
-  /* NOTE:Fetches Data */
+  /* NOTE: Fetches Data */
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
       /* console.log(res); */
@@ -166,6 +166,17 @@ export default function RegisterPopUp(props) {
     }else if(stage == 3){
       setSignupStage(1);
       popUpSwitch();
+      setRegisterForm((prev) => ({
+        ...prev,
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        checkPassword: "",
+        street: "",
+        zipcode: "",
+        city: "",
+      }));
     } else {
       console.error("Pleas enter form Correctly");
       console.log(registerForm);
