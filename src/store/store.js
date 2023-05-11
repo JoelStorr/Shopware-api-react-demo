@@ -70,3 +70,13 @@ export const useUILogic = create(
       })),
   }))
 );
+
+
+export const useStoreUser = create(
+  subscribeWithSelector((set) => ({
+    
+    userContextToken: null,
+    setUserContectToken: (token)=>set((state)=>({...state, userContextToken: token })),
+
+  }))
+);

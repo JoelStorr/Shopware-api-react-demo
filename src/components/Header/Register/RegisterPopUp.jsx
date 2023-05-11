@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
-import StoreApiRequest from "../../../helper/shopware api/apiHelper";
+import StoreApiRequest, {devApiHelper} from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
-import { useUILogic } from "../../../store/store";
+import { useUILogic, useStoreUser } from "../../../store/store";
 
 /* TODO: Set Context Token to User Store */
 /* TODO: Set Country Data on Dropdown with Adress Info */
@@ -31,11 +31,14 @@ export default function RegisterPopUp(props) {
   });
 
   const popUpSwitch = useUILogic((state) => state.setRegistrationPopUp);
+  const setUserContextToken = useStoreUser(
+    (state) => state.setUserContectToken
+  );
 
   /* NOTE:Fetches Data */
   useEffect(() => {
     StoreApiRequest.salutation().then((res) => {
-      console.log(res);
+      /* console.log(res); */
       setPronounce(res);
       setRegisterForm((prev) => {
         return { ...prev, pronounce: res[0].id };
@@ -43,7 +46,7 @@ export default function RegisterPopUp(props) {
     });
     StoreApiRequest.getCountries().then((res) => {
       setCountries(res);
-      console.log(res);
+      /* console.log(res); */
       setRegisterForm((prev) => {
         return { ...prev, countryID: res[0].id };
       });
@@ -60,6 +63,11 @@ export default function RegisterPopUp(props) {
       (showRegistrationPopUp) => setPopUpShown(showRegistrationPopUp)
     );
 
+      /* NOTE: Dev Helper functions */
+      devApiHelper.loginCheck().then((res)=>{return});
+
+
+
 
     return ()=>{
       unsubScribeUIStore();
@@ -69,12 +77,12 @@ export default function RegisterPopUp(props) {
 
   /* NOTE: Dev Check to Print on each change */
   useEffect(() => {
-    console.log(registerForm);
+    /* console.log(registerForm); */
   }, [registerForm]);
 
   /* NOTE: Handles data assignment on form Change */
   function formHandler(e) {
-    console.log(e.target.value);
+    /* console.log(e.target.value); */
 
     switch (e.target.id) {
       case "pronounce-select":
@@ -138,13 +146,20 @@ export default function RegisterPopUp(props) {
     if(e != null){
       e.preventDefault();
     }
-    console.log("Run form function");
+    /* console.log("Run form function"); */
     if (stage == 1) {
       setSignupStage(2);
     } else if (stage == 2 && signUpStage == 2) {
       setSignupStage(3);
       StoreApiRequest.registerUser(registerForm)
-        .then((res) => console.log(res))
+        .then((res) => {
+          /* NOTE: Adds user Context to Store */
+          setUserContextToken(res.headers["sw-context-token"]);
+          /* NOTE: Dev Helper functions */
+          devApiHelper
+            .loginCheck(res.headers['sw-context-token'])
+            .then((res) => console.info("User signed in:", res));
+        })
         .catch((e) => {
           console.error(e);
         });

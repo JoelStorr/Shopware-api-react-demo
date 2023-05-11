@@ -96,8 +96,28 @@ export default class StoreApiRequest {
       url: `${shopwareDomain}context`,
       headers: { "sw-access-key": shopwareKey },
     }).then((res) => {
-      console.log(res.data);
       return res.data;
     });
+  }
+}
+
+
+export class devApiHelper{
+  static async loginCheck(token){
+
+   
+      
+      return axios({
+        method: "get",
+        url: `${shopwareDomain}account/customer`,
+        headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+      }).then((res) => {
+        console.log(res.data);
+        return res.data;
+      });
+    
+
+
+    
   }
 }
