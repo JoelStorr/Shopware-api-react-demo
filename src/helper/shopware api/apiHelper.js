@@ -27,7 +27,19 @@ export default class StoreApiRequest {
       return res.data.elements;
     });
   };
-  /* static async search */
+  /* TODO: Transform to Search function */
+  static async getSearchResult(searchVal){
+    return axios({
+      method: "post",
+      url: `${shopwareDomain}search`,
+      headers: { "sw-access-key": shopwareKey },
+      data:{
+        search:searchVal
+      }
+    }).then((res) => {
+      return res;
+    });
+  }
   static async loginUser(loginObj) {
     return axios({
       method: "post",
