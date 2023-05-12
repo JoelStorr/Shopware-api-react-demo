@@ -5,7 +5,7 @@ import StoreApiRequest from './../../../helper/shopware api/apiHelper'
 
 export default function Search() {
 
-    const [searchVal, setSearchVal ] = useState('')
+    const [searchRes, setSearchRes ] = useState(null)
 
     let timer = null; 
 
@@ -14,7 +14,7 @@ export default function Search() {
         
         clearTimeout(timer);
         timer = setTimeout(()=>{
-            StoreApiRequest.getSearchResult(e.target.value).then(res => console.log(res))
+            StoreApiRequest.getSearchResult(e.target.value).then(res => {console.log(res.data.elements);setSearchRes(res.data.elements)})
         }, 1000)
 
     }
@@ -22,8 +22,22 @@ export default function Search() {
 
 
   return (
-        <form onSubmit={(e)=>onSearchChange(e)} >
-            <input type='text' id="search-box" onChange={(e)=>onSearchChange(e)} placeholder='Search'/>
-        </form>
+
+
+    <>
+            <form onSubmit={(e)=>onSearchChange(e)} >
+                <input type='text' id="search-box" onChange={(e)=>onSearchChange(e)} placeholder='Search'/>
+            </form>
+        <div className='search-container'>
+            
+            {searchRes && (
+                <ul className='result-container'>
+                    {searchRes.map(val=>(<li key={val.id}>{val.name}</li>))}
+                </ul>
+            )}
+        </div>
+
+    </>
+
   )
 }
