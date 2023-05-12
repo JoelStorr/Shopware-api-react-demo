@@ -4,9 +4,19 @@ import  useUIStore  from '../../../store/store';
 
 export default function Register() {
 
-   const popUpSwitch = useUIStore((state) => state.setRegistrationPopUp)
+   const [popUpSwitch, popUpRegisterSwitch] = useUIStore((state) => [
+     state.setShowPopUp,
+     state.setRegistrationPopUp,
+   ]);
+
+   
+
+   function toggle(){
+    popUpSwitch();
+    popUpRegisterSwitch()
+   }
 
   return (
-    <button onClick={()=>{popUpSwitch()}}>Register</button>
+    <button onClick={()=>{toggle()}}>Register</button>
   )
 }

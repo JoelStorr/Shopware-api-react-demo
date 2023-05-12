@@ -12,7 +12,7 @@ import useUIStore from "../../../store/store";
 /* TODO: Fix form Placeholder Text */
 
 export default function RegisterPopUp(props) {
-  const [popUpShown, setPopUpShown] = useState(false);
+  
   const [pronounce, setPronounce] = useState([]);
   const [countries, setCountries] = useState([]);
   const [signUpStage, setSignupStage] = useState(1);
@@ -30,7 +30,7 @@ export default function RegisterPopUp(props) {
     city: "",
   });
 
-  const popUpSwitch = useUIStore((state) => state.setRegistrationPopUp);
+  const popUpSwitch = useUIStore((state) => state.setShowPopUp);
   const setUserContextToken = useStoreUser(
     (state) => state.setUserContectToken
   );
@@ -57,19 +57,14 @@ export default function RegisterPopUp(props) {
       })
     );
 
-    const unsubScribeUIStore = useUIStore.subscribe(
-      (state) => state.showRegistrationPopUp,
-      (showRegistrationPopUp) => { setPopUpShown(showRegistrationPopUp)}
-    );
+   
 
     /* NOTE: Dev Helper functions */
     devApiHelper.loginCheck().then((res) => {
       return;
     });
 
-    return () => {
-      unsubScribeUIStore();
-    };
+  
   }, []);
 
   /* NOTE: Dev Check to Print on each change */
@@ -182,8 +177,8 @@ export default function RegisterPopUp(props) {
   }
 
   return (
-    <>
-      {popUpShown && (
+   
+
         <div className="register-popup">
           <h1>Register</h1>
           <button onClick={() => formSender(null, 3)}>X</button>
@@ -313,7 +308,7 @@ export default function RegisterPopUp(props) {
             </div>
           )}
         </div>
-      )}
-    </>
+      
+    
   );
 }

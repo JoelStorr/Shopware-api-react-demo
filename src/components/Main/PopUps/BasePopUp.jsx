@@ -1,11 +1,21 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import './BasePopUp.scss'
 
 import  useUIStore  from '../../../store/store'
+import RegisterPopUp from '../../Header/Register/RegisterPopUp';
+import LoginPopUp from '../../Header/login/LoginPopUp';
 
-export default function BasePopUp() {
+export default function BasePopUp(props) {
 
-   
+   const [logInOrRegister, setLogInOrRegister] = useState(
+     useUIStore((state) => state.logInOrRegister)
+   );
+  
+
+
+    
+    
+
 
     console.log('Loded Base PopUp');
 
@@ -24,9 +34,10 @@ export default function BasePopUp() {
 
   return (
     <>
-        <div className='basePopUp'>
-           <h1>Hello World Pop Up</h1>
-        </div>
+      <div className="basePopUp">
+        {logInOrRegister === "login" && <LoginPopUp />}
+        {logInOrRegister === 'register' && <RegisterPopUp />}
+      </div>
     </>
   );
 }

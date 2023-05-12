@@ -24,6 +24,7 @@ function App() {
   const [popUpShown, setPopUpShown] = useState(null);
   
   
+  
     
   /* TODO: See why we can Subscribe to the Store */
    useEffect(()=>{
@@ -58,7 +59,7 @@ function App() {
       <MainHeader />
       <ShopDetailOverlay />
       {popUpShown && (<BasePopUp />)}
-      <RegisterPopUp />
+      
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>

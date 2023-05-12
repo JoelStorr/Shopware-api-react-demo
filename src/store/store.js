@@ -50,19 +50,21 @@ const useUIStore = create(
       set((state) => ({ ...state, tl3: { ...state.tl3, categoryID: id } })),
 
     /* Handleing Popup Data */
-    showPopUp: 0,
+    showPopUp: false,
     setShowPopUp: () =>
       set((state) => ({ ...state, showPopUp: !state.showPopUp })),
 
-    showLoginPopUp: false,
+    logInOrRegister: null,
     setLoginPopUp: () =>
-      set((state) => ({ ...state, showLoginPopUp: !state.showLoginPopUp })),
+      set((state) => ({
+        ...state,
+        logInOrRegister: 'login',
+      })),
 
-    showRegistrationPopUp: false,
     setRegistrationPopUp: () =>
       set((state) => ({
         ...state,
-        showRegistrationPopUp: !state.showRegistrationPopUp,
+        logInOrRegister: 'register',
       })),
   }))
 );
