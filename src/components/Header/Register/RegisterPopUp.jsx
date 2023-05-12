@@ -4,7 +4,7 @@ import StoreApiRequest, {
   devApiHelper,
 } from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
-import {  useStoreUser } from "../../../store/store";
+
 import useUIStore from "../../../store/store";
 
 /* TODO: Front End Form Validation */
@@ -31,7 +31,7 @@ export default function RegisterPopUp(props) {
   });
 
   const popUpSwitch = useUIStore((state) => state.setShowPopUp);
-  const setUserContextToken = useStoreUser(
+  const setUserContextToken = useUIStore(
     (state) => state.setUserContectToken
   );
 

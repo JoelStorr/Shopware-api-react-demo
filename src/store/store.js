@@ -3,6 +3,7 @@ import { subscribeWithSelector } from "zustand/middleware";
 
 const useUIStore = create(
   subscribeWithSelector((set) => ({
+    /* NOTE: Run Tl Data */
     tl1: {
       isRunning: false,
       trigger: ".box1",
@@ -49,7 +50,7 @@ const useUIStore = create(
     setTl3CategoryId: (id) =>
       set((state) => ({ ...state, tl3: { ...state.tl3, categoryID: id } })),
 
-    /* Handleing Popup Data */
+    /* NOTE: Handleing Popup Data */
     showPopUp: false,
     setShowPopUp: () =>
       set((state) => ({ ...state, showPopUp: !state.showPopUp })),
@@ -58,28 +59,20 @@ const useUIStore = create(
     setLoginPopUp: () =>
       set((state) => ({
         ...state,
-        logInOrRegister: 'login',
+        logInOrRegister: "login",
       })),
 
     setRegistrationPopUp: () =>
       set((state) => ({
         ...state,
-        logInOrRegister: 'register',
+        logInOrRegister: "register",
       })),
+
+    /* NOTE: User Data */
+    userContextToken: null,
+    setUserContectToken: (token) =>
+      set((state) => ({ ...state, userContextToken: token })),
   }))
 );
 
 export default useUIStore;
-
-
-
-
-
-export const useStoreUser = create(
-  subscribeWithSelector((set) => ({
-    
-    userContextToken: null,
-    setUserContectToken: (token)=>set((state)=>({...state, userContextToken: token })),
-
-  }))
-);

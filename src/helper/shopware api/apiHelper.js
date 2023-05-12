@@ -28,13 +28,20 @@ export default class StoreApiRequest {
     });
   };
   /* TODO: Change LogIn Function */
-  static async login(loginObj) {
+  static async loginUser(loginObj) {
     return axios({
       method: "post",
-      url: `${shopwareDomain}product-listing/${categoryID}`,
-      headers: { "sw-access-key": shopwareKey },
+      url: `${shopwareDomain}account/login`,
+      headers: {
+        "sw-access-key": shopwareKey,
+        "sw-context-token": loginObj.contextToken,
+      },
+      data:{
+        email: loginObj.email,
+        password: loginObj.password,
+      }
     }).then((res) => {
-      return res.data.elements;
+      return res;
     });
   };
   /* TODO: Chnage Billing Info to Dynamic Data */
