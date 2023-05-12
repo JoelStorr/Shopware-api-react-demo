@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useTlStore } from "../../../store/store";
+import  useUIStore  from "../../../store/store";
 import { gsap } from "gsap";
 import "./ShopDetailOverlay.scss";
 import { useFrame } from "@react-three/fiber";
@@ -19,7 +19,7 @@ export default function ShopDetailOverlay() {
   const [categoryID, setCategoryID] = useState();
 
   useEffect(() => {
-    const unsubscribeTl = useTlStore.subscribe(
+    const unsubscribeTl = useUIStore.subscribe(
       (state) => state,
       (state) => {
         if (state.tl1.isRunning) {

@@ -3,7 +3,7 @@ import axios from "axios";
 
 import './Navigation.scss';
 import apiCategoriesHelper from "../../../helper/shopware api/apiCategoriesHelper";
-import { useTlStore } from "./../../../store/store.js";
+import  useUIStore  from "./../../../store/store";
 
 export default function Navigation() {
   const shopwareDomain = "http://localhost/store-api/";
@@ -13,9 +13,9 @@ export default function Navigation() {
   const [isHovering, setIsHovering] = useState(false);
   const [endOfDemo, setEndOfDemo] = useState(false)
 
-   const setTl1CategoryId = useTlStore((state) => state.setTl1CategoryId);
-   const setTl2CategoryId = useTlStore((state) => state.setTl2CategoryId);
-   const setTl3CategoryId = useTlStore((state) => state.setTl3CategoryId);
+   const setTl1CategoryId = useUIStore((state) => state.setTl1CategoryId);
+   const setTl2CategoryId = useUIStore((state) => state.setTl2CategoryId);
+   const setTl3CategoryId = useUIStore((state) => state.setTl3CategoryId);
 
 
   useEffect(() => {

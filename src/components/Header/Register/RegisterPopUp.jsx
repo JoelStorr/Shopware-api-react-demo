@@ -5,14 +5,14 @@ import StoreApiRequest, {
 } from "../../../helper/shopware api/apiHelper";
 import "./RegisterPopUp.scss";
 import {  useStoreUser } from "../../../store/store";
-import useUILogic from "../../../store/uiStore";
+import useUIStore from "../../../store/store";
 
 /* TODO: Front End Form Validation */
 /* TODO: Make sign up impossible until form is propperly fild in */
 /* TODO: Fix form Placeholder Text */
 
 export default function RegisterPopUp(props) {
-  /* const [popUpShown, setPopUpShown] = useState(false); */
+  const [popUpShown, setPopUpShown] = useState(false);
   const [pronounce, setPronounce] = useState([]);
   const [countries, setCountries] = useState([]);
   const [signUpStage, setSignupStage] = useState(1);
@@ -30,7 +30,7 @@ export default function RegisterPopUp(props) {
     city: "",
   });
 
-  const popUpSwitch = useUILogic((state) => state.setRegistrationPopUp);
+  const popUpSwitch = useUIStore((state) => state.setRegistrationPopUp);
   const setUserContextToken = useStoreUser(
     (state) => state.setUserContectToken
   );
@@ -57,9 +57,9 @@ export default function RegisterPopUp(props) {
       })
     );
 
-    const unsubScribeUIStore = useUILogic.subscribe(
+    const unsubScribeUIStore = useUIStore.subscribe(
       (state) => state.showRegistrationPopUp,
-      (showRegistrationPopUp) => setPopUpShown(showRegistrationPopUp)
+      (showRegistrationPopUp) => { setPopUpShown(showRegistrationPopUp)}
     );
 
     /* NOTE: Dev Helper functions */

@@ -11,7 +11,7 @@ import { PointLightHelper } from "three/src/helpers/PointLightHelper";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/all";
 
-import { useTlStore } from "./../../store/store.js";
+import  useUIStore  from "./../../store/store.js";
 
 import "./Main.scss";
 
@@ -23,20 +23,20 @@ export default function Main(props) {
   const camera = useThree((state) => state.camera);
   const [tlIsActive, setTlIsActive] = useState("");
 
-  const tl1Data = useTlStore((state) => state.tl1);
-  const tl2Data = useTlStore((state) => state.tl2);
-  const tl3Data = useTlStore((state) => state.tl3);
+  const tl1Data = useUIStore((state) => state.tl1);
+  const tl2Data = useUIStore((state) => state.tl2);
+  const tl3Data = useUIStore((state) => state.tl3);
 
-  const setTimelineOneState = useTlStore((state) => state.setTimelineOneState);
-  const setTimelineTwoState = useTlStore((state) => state.setTimelineTwoState);
-  const setTimelineThreeState = useTlStore((state) => state.setTimelineThreeState); 
+  const setTimelineOneState = useUIStore((state) => state.setTimelineOneState);
+  const setTimelineTwoState = useUIStore((state) => state.setTimelineTwoState);
+  const setTimelineThreeState = useUIStore((state) => state.setTimelineThreeState); 
 
  
 
 
-  const setRefTl1 = useTlStore((state) => state.setRefTl1); 
-  const setRefTl2 = useTlStore((state) => state.setRefTl2); 
-  const setRefTl3 = useTlStore((state) => state.setRefTl3); 
+  const setRefTl1 = useUIStore((state) => state.setRefTl1); 
+  const setRefTl2 = useUIStore((state) => state.setRefTl2); 
+  const setRefTl3 = useUIStore((state) => state.setRefTl3); 
 
   const focetGroupe = useRef();
   const towlHolder = useRef();

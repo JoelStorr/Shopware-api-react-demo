@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import './BasePopUp.scss'
 
-import  useUILogic  from '../../../store/uiStore'
+import  useUIStore  from '../../../store/store'
 
 export default function BasePopUp() {
 
@@ -10,7 +10,7 @@ export default function BasePopUp() {
     console.log('Loded Base PopUp');
 
    /*  useEffect(()=>{
-         const unsubScribeUIStore = useUILogic.subscribe(
+         const unsubScribeUIStore = useUIStore.subscribe(
            (state) => state.showRegistrationPopUp,
            (showRegistrationPopUp) => setPopUpShown(showRegistrationPopUp)
          );

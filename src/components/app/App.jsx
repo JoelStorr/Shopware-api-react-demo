@@ -14,8 +14,8 @@ import BasePopUp from '../Main/PopUps/BasePopUp';
 import ShopDetailOverlay from '../Main/Overlays/ShopDetailOverlay';
 import RegisterPopUp from '../Header/Register/RegisterPopUp';
 /* NOTE: Store Import */
-import  useUILogic  from "./../../store/uiStore";
 
+import  useUIStore  from '../../store/store';
 
 
 function App() {
@@ -25,17 +25,11 @@ function App() {
   
   
     
-  
+  /* TODO: See why we can Subscribe to the Store */
    useEffect(()=>{
-     let removeUISub = useUILogic.subscribe(
-       (state) => {
-         console.log('State Check:',state.showPopUp);
-         return state.showPopUp;
-       },
-       (showPopUp) => {
-         console.info("Run Show Popup", showPopUp);
-         setPopUpShown(showPopUp);
-       }
+     let removeUISub = useUIStore.subscribe(
+       (state) => state,
+       (state) => setPopUpShown(state.showPopUp)
      );
 
      return ()=>{
@@ -43,7 +37,17 @@ function App() {
      }
    },[])
   
+   useEffect(()=>{console.log('PopUp Shown', popUpShown)},[popUpShown])
 
+
+ /*   useEffect(()=>{
+
+    const unsubDemo = useUIStore.subscribe((state)=>state, (demo)=>{ console.log(demo); setPopUpShown(demo)})
+
+    return ()=>{
+      unsubDemo();
+    }
+   },[]) */
 
 
   //NOTE: Change Leva route for Production
@@ -54,6 +58,7 @@ function App() {
       <MainHeader />
       <ShopDetailOverlay />
       {popUpShown && (<BasePopUp />)}
+      <RegisterPopUp />
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>
