@@ -37,7 +37,7 @@ export default function RegisterPopUp(props) {
 
   /* NOTE: Fetches Data */
   useEffect(() => {
-    StoreApiRequest.salutation().then((res) => {
+    StoreApiRequest.getSalutation().then((res) => {
       setPronounce(res);
       setRegisterForm((prev) => {
         return { ...prev, pronounce: res[0].id };

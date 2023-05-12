@@ -15,7 +15,7 @@ export default class StoreApiRequest {
     });
   };
   /* TODO: Make Indevidual Product Request */
-  static async product() {
+  static async getProduct() {
     /* TODO: Add Function */
   };
   static async getProductList(categoryID) {
@@ -27,7 +27,7 @@ export default class StoreApiRequest {
       return res.data.elements;
     });
   };
-  /* TODO: Change LogIn Function */
+  /* static async search */
   static async loginUser(loginObj) {
     return axios({
       method: "post",
@@ -44,8 +44,6 @@ export default class StoreApiRequest {
       return res;
     });
   };
-  /* TODO: Chnage Billing Info to Dynamic Data */
-  /* TODO: Fix Context Token */
   static async registerUser(userObj) {
     return axios({
       method: "post",
@@ -55,7 +53,7 @@ export default class StoreApiRequest {
         "sw-context-token": userObj.contextToken,
       },
       data: {
-        salutationId: userObj.pronounce,
+        getSalutationId: userObj.pronounce,
         firstName: userObj.firstName,
         lastName: userObj.lastName,
         email: userObj.email,
@@ -77,16 +75,15 @@ export default class StoreApiRequest {
         console.error(e);
       });
   };
-   static async salutation() {
+   static async getSalutation() {
     return axios({
       method: "post",
-      url: `${shopwareDomain}salutation`,
+      url: `${shopwareDomain}getSalutation`,
       headers: { "sw-access-key": shopwareKey }
     }).then((res) => {
       return res.data.elements;
     }).catch(e=>{});
   };
-
   static async getCountries(){
     return axios({
       method: "post",
@@ -96,7 +93,6 @@ export default class StoreApiRequest {
       return res.data.elements;
     });
   };
-
   static async getContext(){
     return axios({
       method: "get",
