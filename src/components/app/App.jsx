@@ -43,7 +43,7 @@ function App() {
         if(state.userContextToken != null){
           devApiHelper.loginCheck(state.userContextToken)
           .then((res)=>{
-            console.log('Login Check', res);
+            /* console.log('Login Check', res); */
             if(res === '403'){
               setUserIsLogedIn(false);
             }else if( res.active === true ){
@@ -61,7 +61,7 @@ function App() {
           return res.token;
         }).then(res=>{
           return StoreApiRequest.makeCart(res);
-        }).then((res)=>console.log(res))
+        }).then((res)=>{/* console.log(res) */})
         .catch((e)=>console.error(e));
       
 

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import  useUIStore  from "../../../store/store";
 import { gsap } from "gsap";
-import "./ShopDetailOverlay.scss";
 import { useFrame } from "@react-three/fiber";
 
+
+import "./ShopDetailOverlay.scss";
+import  useUIStore  from "../../../store/store";
 import { getProductList } from "../../../helper/shopware api/apiProductHelper";
+import StoreApiRequest from "../../../helper/shopware api/apiHelper";
 
 export default function ShopDetailOverlay() {
   const [detailsActive, setDetailsActive] = useState(false);
@@ -17,6 +19,7 @@ export default function ShopDetailOverlay() {
   const [activeProductIndex, setActiveProductIndex] = useState(0);
 
   const [categoryID, setCategoryID] = useState();
+  const userContextToken = useUIStore((state) => state.userContextToken);
 
   useEffect(() => {
     const unsubscribeTl = useUIStore.subscribe(
@@ -134,6 +137,17 @@ export default function ShopDetailOverlay() {
     }
   }
 
+
+  function addToCart(productID){
+    if(userContextToken === null){
+      console.error('User Context Token was not Properly set')
+      return;
+    }
+    StoreApiRequest.addToCart(userContextToken, productID).then(res=>console.log('Add to Cart', res))
+  }
+
+
+
   return (
     <>
       {detailsActive && productList.length > 0 && (
@@ -176,7 +190,7 @@ export default function ShopDetailOverlay() {
               </p>
               <div className="detailScreen-btn-box">
                 <button>Remember Later</button>
-                <button>Add to Cart</button>
+                <button onClick={()=>addToCart(productList[activeProductIndex].id)}>Add to Cart</button>
               </div>
             </div>
           )}

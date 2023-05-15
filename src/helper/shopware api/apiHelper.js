@@ -137,16 +137,16 @@ export default class StoreApiRequest {
     });
   }
 
-  static async addToCart(token){
+  static async addToCart(token, productID){
     return axios({
-      method: "get",
+      method: "post",
       url: `${shopwareDomain}checkout/cart/line-item`,
       headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
       data: {
         items: [
           {
             type: "product",
-            referencedId: null,
+            referencedId: productID,
           },
         ],
       },
