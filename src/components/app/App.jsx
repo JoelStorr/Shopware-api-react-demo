@@ -30,7 +30,7 @@ function App() {
   const [popUpShown, setPopUpShown] = useState(null);
   const [cartShown, setCartShown] = useState(false);
   
-  const 
+  const setUserContextToken = useUIStore((state) => state.setUserContextToken);
   
     
   /* TODO: See why we can Subscribe to the Store */
@@ -40,8 +40,15 @@ function App() {
        (state) => setPopUpShown(state.showPopUp)
      );
 
-      StoreApiRequest.getContext().then((res)=>{})
-      StoreApiRequest.makeCart()
+      StoreApiRequest.getContext()
+        .then((res)=>{ 
+          setUserContextToken(res.token); 
+          return res.token;
+        }).then(res=>{
+          return StoreApiRequest.makeCart(res);
+        }).then((res)=>console.log(res))
+        .catch((e)=>console.error(e));
+      
 
      return ()=>{
       removeUISub();
