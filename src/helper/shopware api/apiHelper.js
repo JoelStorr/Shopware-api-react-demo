@@ -167,9 +167,9 @@ export class devApiHelper{
         url: `${shopwareDomain}account/customer`,
         headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
       }).then((res) => {
-        console.log(res.data);
+        /* console.log(res.data); */
         return res.data;
-      });
+      }).catch(e=>{return e.response.data.errors[0]["status"];});
     
 
 
