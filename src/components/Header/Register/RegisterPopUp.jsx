@@ -42,7 +42,7 @@ export default function RegisterPopUp(props) {
       setRegisterForm((prev) => {
         return { ...prev, pronounce: res[0].id };
       });
-    });
+    }).catch(e=>console.error(e));
     StoreApiRequest.getCountries().then((res) => {
       setCountries(res);
 

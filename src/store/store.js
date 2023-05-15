@@ -72,6 +72,7 @@ const useUIStore = create(
     userContextToken: null,
     setUserContextToken: (token) =>
       set((state) => ({ ...state, userContextToken: token })),
+    
   }))
 );
 

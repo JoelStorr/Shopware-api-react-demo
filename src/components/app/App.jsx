@@ -17,7 +17,7 @@ import Cart from '../Main/Cart/Cart';
 
 
 /* NOTE: API Helper */
-import StoreApiRequest from '../../helper/shopware api/apiHelper';
+import StoreApiRequest, {devApiHelper} from '../../helper/shopware api/apiHelper';
 
 
 /* NOTE: Store Import */
@@ -29,15 +29,30 @@ function App() {
   /* NOTE: Handle PopUp Shown */
   const [popUpShown, setPopUpShown] = useState(null);
   const [cartShown, setCartShown] = useState(false);
+  const [userIsLoggedIn, setUserIsLogedIn] = useState(false);
   
   const setUserContextToken = useUIStore((state) => state.setUserContextToken);
   
     
-  /* TODO: See why we can Subscribe to the Store */
+  
    useEffect(()=>{
      let removeUISub = useUIStore.subscribe(
        (state) => state,
-       (state) => setPopUpShown(state.showPopUp)
+       (state) => {
+        setPopUpShown(state.showPopUp);
+        if(state.userContextToken != null){
+          devApiHelper.loginCheck(state.userContextToken)
+          .then((res)=>{
+            console.log('Login Check', res);
+            if(res === '403'){
+              setUserIsLogedIn(false);
+            }else if( res.active === true ){
+              setUserIsLogedIn(true);
+              
+            }
+          })
+        }
+      }
      );
 
       StoreApiRequest.getContext()
@@ -55,17 +70,11 @@ function App() {
      }
    },[])
   
-   useEffect(()=>{console.log('PopUp Shown', popUpShown)},[popUpShown])
+   /* NOTE: Dev Helper */
+   /* useEffect(()=>{console.log('PopUp Shown', popUpShown)},[popUpShown]) */
 
 
- /*   useEffect(()=>{
-
-    const unsubDemo = useUIStore.subscribe((state)=>state, (demo)=>{ console.log(demo); setPopUpShown(demo)})
-
-    return ()=>{
-      unsubDemo();
-    }
-   },[]) */
+ 
 
 
   //NOTE: Change Leva route for Production
@@ -73,11 +82,11 @@ function App() {
   //NOTE: Base Camera Values -> [3, 2, 3]
   return (
     <>
-      <MainHeader />
+      <MainHeader  userIsLoggedIn={userIsLoggedIn}/>
       <ShopDetailOverlay />
       <CartButton setCartShown={setCartShown} />
       {popUpShown && <BasePopUp />}
-      {cartShown && <Cart setCartShown={setCartShown} />}
+      {cartShown && <Cart setCartShown={setCartShown} userIsLoggedIn={userIsLoggedIn} />}
 
       {/* 3D Render Element */}
       <div className="renderBox">
