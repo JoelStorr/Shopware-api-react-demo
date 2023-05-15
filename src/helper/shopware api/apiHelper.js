@@ -90,7 +90,7 @@ export default class StoreApiRequest {
   static async getSalutation() {
     return axios({
       method: "post",
-      url: `${shopwareDomain}getSalutation`,
+      url: `${shopwareDomain}salutation`,
       headers: { "sw-access-key": shopwareKey },
     })
       .then((res) => {
