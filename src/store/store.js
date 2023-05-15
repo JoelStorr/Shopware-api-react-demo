@@ -70,7 +70,7 @@ const useUIStore = create(
 
     /* NOTE: User Data */
     userContextToken: null,
-    setUserContectToken: (token) =>
+    setUserContextToken: (token) =>
       set((state) => ({ ...state, userContextToken: token })),
   }))
 );

@@ -16,6 +16,9 @@ import CartButton from '../Main/Cart/CartButton';
 import Cart from '../Main/Cart/Cart';
 
 
+/* NOTE: API Helper */
+import StoreApiRequest from '../../helper/shopware api/apiHelper';
+
 
 /* NOTE: Store Import */
 import  useUIStore  from '../../store/store';
@@ -27,7 +30,7 @@ function App() {
   const [popUpShown, setPopUpShown] = useState(null);
   const [cartShown, setCartShown] = useState(false);
   
-  
+  const 
   
     
   /* TODO: See why we can Subscribe to the Store */
@@ -37,7 +40,8 @@ function App() {
        (state) => setPopUpShown(state.showPopUp)
      );
 
-     
+      StoreApiRequest.getContext().then((res)=>{})
+      StoreApiRequest.makeCart()
 
      return ()=>{
       removeUISub();

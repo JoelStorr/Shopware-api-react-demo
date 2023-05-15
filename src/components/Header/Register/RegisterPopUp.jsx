@@ -32,7 +32,7 @@ export default function RegisterPopUp(props) {
 
   const popUpSwitch = useUIStore((state) => state.setShowPopUp);
   const setUserContextToken = useUIStore(
-    (state) => state.setUserContectToken
+    (state) => state.setUserContextToken
   );
 
   /* NOTE: Fetches Data */

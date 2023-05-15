@@ -12,7 +12,7 @@ export default function LoginPopUp() {
   });
 
   const popUpSwitch = useUIStore((state) => state.setShowPopUp);
-  const setUserContextToken = useUIStore((state) => state.setUserContectToken);
+  const setUserContextToken = useUIStore((state) => state.setUserContextToken);
 
   /* NOTE: Fetches Data */
   useEffect(() => {
