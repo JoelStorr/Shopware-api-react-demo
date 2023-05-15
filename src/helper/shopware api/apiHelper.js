@@ -13,11 +13,11 @@ export default class StoreApiRequest {
     }).then((res) => {
       return res.data.elements;
     });
-  };
+  }
   /* TODO: Make Indevidual Product Request */
   static async getProduct() {
     /* TODO: Add Function */
-  };
+  }
   static async getProductList(categoryID) {
     return axios({
       method: "post",
@@ -26,16 +26,16 @@ export default class StoreApiRequest {
     }).then((res) => {
       return res.data.elements;
     });
-  };
+  }
   /* TODO: Transform to Search function */
-  static async getSearchResult(searchVal){
+  static async getSearchResult(searchVal) {
     return axios({
       method: "post",
       url: `${shopwareDomain}search`,
       headers: { "sw-access-key": shopwareKey },
-      data:{
-        search:searchVal
-      }
+      data: {
+        search: searchVal,
+      },
     }).then((res) => {
       return res;
     });
@@ -48,14 +48,14 @@ export default class StoreApiRequest {
         "sw-access-key": shopwareKey,
         "sw-context-token": loginObj.contextToken,
       },
-      data:{
+      data: {
         email: loginObj.email,
         password: loginObj.password,
-      }
+      },
     }).then((res) => {
       return res;
     });
-  };
+  }
   static async registerUser(userObj) {
     return axios({
       method: "post",
@@ -86,17 +86,19 @@ export default class StoreApiRequest {
       .catch((e) => {
         console.error(e);
       });
-  };
-   static async getSalutation() {
+  }
+  static async getSalutation() {
     return axios({
       method: "post",
       url: `${shopwareDomain}getSalutation`,
-      headers: { "sw-access-key": shopwareKey }
-    }).then((res) => {
-      return res.data.elements;
-    }).catch(e=>{});
-  };
-  static async getCountries(){
+      headers: { "sw-access-key": shopwareKey },
+    })
+      .then((res) => {
+        return res.data.elements;
+      })
+      .catch((e) => {});
+  }
+  static async getCountries() {
     return axios({
       method: "post",
       url: `${shopwareDomain}country`,
@@ -104,12 +106,50 @@ export default class StoreApiRequest {
     }).then((res) => {
       return res.data.elements;
     });
-  };
-  static async getContext(){
+  }
+  static async getContext() {
     return axios({
       method: "get",
       url: `${shopwareDomain}context`,
       headers: { "sw-access-key": shopwareKey },
+    }).then((res) => {
+      return res.data;
+    });
+  }
+  static async makeCart(token) {
+    return axios({
+      method: "get",
+      url: `${shopwareDomain}checkout/cart`,
+      headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+      data: { name: "my-test-cart" },
+    }).then((res) => {
+      return res.data;
+    });
+  }
+  static async deleteCart(token) {
+    return axios({
+      method: "delete",
+      url: `${shopwareDomain}checkout/cart`,
+      headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+      data: { name: "my-test-cart" },
+    }).then((res) => {
+      return res.data;
+    });
+  }
+
+  static async addToCart(token){
+    return axios({
+      method: "get",
+      url: `${shopwareDomain}checkout/cart/line-item`,
+      headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+      data: {
+        items: [
+          {
+            type: "product",
+            referencedId: null,
+          },
+        ],
+      },
     }).then((res) => {
       return res.data;
     });
