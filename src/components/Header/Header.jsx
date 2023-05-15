@@ -10,7 +10,7 @@ import Search from './search/Search';
 import ProfileButton from './user/ProfileButton';
 
 
-export default function MainHeader({ userIsLoggedIn }) {
+export default function MainHeader({ userIsLoggedIn, userData }) {
  
 
   return (
@@ -25,7 +25,7 @@ export default function MainHeader({ userIsLoggedIn }) {
               <Register />
             </>
           )}
-          {userIsLoggedIn && <ProfileButton />}
+          {userIsLoggedIn && <ProfileButton userData={userData}/>}
         </div>
       </div>
       <Navigation />

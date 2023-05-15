@@ -30,10 +30,11 @@ function App() {
   const [popUpShown, setPopUpShown] = useState(null);
   const [cartShown, setCartShown] = useState(false);
   const [userIsLoggedIn, setUserIsLogedIn] = useState(false);
+  const [userData, setUserData] = useState(null)
   
   const setUserContextToken = useUIStore((state) => state.setUserContextToken);
   
-    
+ 
   
    useEffect(()=>{
      let removeUISub = useUIStore.subscribe(
@@ -47,7 +48,9 @@ function App() {
             if(res === '403'){
               setUserIsLogedIn(false);
             }else if( res.active === true ){
+              console.log(res);
               setUserIsLogedIn(true);
+              setUserData(res);
               
             }
           })
@@ -82,7 +85,7 @@ function App() {
   //NOTE: Base Camera Values -> [3, 2, 3]
   return (
     <>
-      <MainHeader  userIsLoggedIn={userIsLoggedIn}/>
+      <MainHeader  userIsLoggedIn={userIsLoggedIn} userData={userData}/>
       <ShopDetailOverlay />
       <CartButton setCartShown={setCartShown} />
       {popUpShown && <BasePopUp />}
