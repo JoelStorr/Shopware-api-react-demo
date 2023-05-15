@@ -37,6 +37,8 @@ function App() {
        (state) => setPopUpShown(state.showPopUp)
      );
 
+     
+
      return ()=>{
       removeUISub();
      }
@@ -64,7 +66,7 @@ function App() {
       <ShopDetailOverlay />
       <CartButton setCartShown={setCartShown} />
       {popUpShown && <BasePopUp />}
-      {cartShown && <Cart />}
+      {cartShown && <Cart setCartShown={setCartShown} />}
 
       {/* 3D Render Element */}
       <div className="renderBox">
