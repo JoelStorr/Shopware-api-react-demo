@@ -137,23 +137,37 @@ export default class StoreApiRequest {
     });
   }
 
-  static async addToCart(token, productID){
-    return axios({
-      method: "post",
-      url: `${shopwareDomain}checkout/cart/line-item`,
-      headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
-      data: {
-        items: [
-          {
-            type: "product",
-            referencedId: productID,
-          },
-        ],
-      },
-    }).then((res) => {
-      return res.data;
-    });
-  }
+  static async addToCart(token, productID=null){
+
+    if(productID === null){
+      return axios({
+        method: "post",
+        url: `${shopwareDomain}checkout/cart/line-item`,
+        headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+        
+      }).then((res) => {
+        return res.data;
+      });
+    }else{
+      return axios({
+        method: "post",
+        url: `${shopwareDomain}checkout/cart/line-item`,
+        headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+        data: {
+          items: [
+            {
+              type: "product",
+              referencedId: productID,
+            },
+          ],
+        },
+      }).then((res) => {
+        return res.data;
+      });
+    }
+    }
+
+
 }
 
 

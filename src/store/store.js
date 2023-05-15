@@ -73,6 +73,12 @@ const useUIStore = create(
     setUserContextToken: (token) =>
       set((state) => ({ ...state, userContextToken: token })),
     
+    localCart:[],
+    setLocalCart: (data)=>set((state)=>{
+        state.localCart.push(data);
+       return {...state, localCart: state.localCart}
+    })
+
   }))
 );
 

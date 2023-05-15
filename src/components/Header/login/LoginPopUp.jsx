@@ -12,7 +12,8 @@ export default function LoginPopUp() {
   });
 
   const popUpSwitch = useUIStore((state) => state.setShowPopUp);
-  const setUserContextToken = useUIStore((state) => state.setUserContextToken);
+  const [setUserContextToken, userContextToken] = useUIStore((state) => [state.setUserContextToken, state.userContextToken]);
+  
 
   /* NOTE: Fetches Data */
   useEffect(() => {
@@ -54,25 +55,46 @@ export default function LoginPopUp() {
     
       e.preventDefault();
     
-    StoreApiRequest.loginUser(loginForm)
-      .then((res) => {
-        /* NOTE: Adds user Context to Store */
-        setUserContextToken(res.data.contextToken);
-        popUpSwitch();
-        setLoginForm((prev) => ({
-          ...prev,
-          password: "",
-        }));
-        console.info(res);
 
-        /* NOTE: Dev Helper functions */
-        devApiHelper
-          .loginCheck(res.data.contextToken)
-          .then((res) => console.info("User signed in:", res));
+
+      StoreApiRequest.addToCart(userContextToken).then((res)=>{
+
+        console.log(res)
+        let cartDataTemp = res.lineItems
+        cartDataTemp = cartDataTemp.map((val)=>{
+          console.log('Indevidaul Catr Items', val);
+          return {id: val.id, quantity: val.quantity};
+        })
+
+        console.log('Transformed Data', cartDataTemp)
+
+        
+        /* TODO: Merge Shoppingcart data back into Logged In Shopping Cart */
+        StoreApiRequest.loginUser(loginForm)
+          .then((res) => {
+            /* NOTE: Adds user Context to Store */
+            setUserContextToken(res.data.contextToken);
+            popUpSwitch();
+            setLoginForm((prev) => ({
+              ...prev,
+              password: "",
+            }));
+            console.info(res);
+    
+            /* NOTE: Dev Helper functions */
+            devApiHelper
+              .loginCheck(res.data.contextToken)
+              .then((res) => {
+                console.info("User signed in:", res);
+                StoreApiRequest.addToCart(userContextToken )
+              });
+          })
+          .catch((e) => {
+            console.error(e);
+          });
+
       })
-      .catch((e) => {
-        console.error(e);
-      });
+
   }
 
   return (
