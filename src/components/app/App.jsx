@@ -12,9 +12,12 @@ import Main from '../Main/Main';
 import BasePopUp from '../Main/PopUps/BasePopUp';
 
 import ShopDetailOverlay from '../Main/Overlays/ShopDetailOverlay';
-import RegisterPopUp from '../Header/Register/RegisterPopUp';
-/* NOTE: Store Import */
+import CartButton from '../Main/Cart/CartButton';
+import Cart from '../Main/Cart/Cart';
 
+
+
+/* NOTE: Store Import */
 import  useUIStore  from '../../store/store';
 
 
@@ -22,6 +25,7 @@ function App() {
 
   /* NOTE: Handle PopUp Shown */
   const [popUpShown, setPopUpShown] = useState(null);
+  const [cartShown, setCartShown] = useState(false);
   
   
   
@@ -58,8 +62,10 @@ function App() {
     <>
       <MainHeader />
       <ShopDetailOverlay />
-      {popUpShown && (<BasePopUp />)}
-      
+      <CartButton setCartShown={setCartShown} />
+      {popUpShown && <BasePopUp />}
+      {cartShown && <Cart />}
+
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>
