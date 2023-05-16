@@ -1,8 +1,11 @@
-import React, {useState, useEffect} from 'react'
-import './LoginPopUp.scss'
+import React, { useState, useEffect } from "react";
+import "./LoginPopUp.scss";
 
-import StoreApiRequest, {devApiHelper, orderItem} from '../../../helper/shopware api/apiHelper';
-import useUIStore from '../../../store/store';
+import StoreApiRequest, {
+  devApiHelper,
+  orderItem,
+} from "../../../helper/shopware api/apiHelper";
+import useUIStore from "../../../store/store";
 
 export default function LoginPopUp() {
   const [loginForm, setLoginForm] = useState({
@@ -12,13 +15,13 @@ export default function LoginPopUp() {
   });
 
   const popUpSwitch = useUIStore((state) => state.setShowPopUp);
-  const [setUserContextToken, userContextToken] = useUIStore((state) => [state.setUserContextToken, state.userContextToken]);
-  
+  const [setUserContextToken, userContextToken] = useUIStore((state) => [
+    state.setUserContextToken,
+    state.userContextToken,
+  ]);
 
   /* NOTE: Fetches Data */
   useEffect(() => {
-  
-
     StoreApiRequest.getContext().then((res) =>
       setLoginForm((prev) => {
         return { ...prev, contextToken: res.token };
@@ -52,61 +55,39 @@ export default function LoginPopUp() {
 
   /* NOTE: Form Submissions */
   function formSender(e) {
-    
-      e.preventDefault();
-    
+    e.preventDefault();
 
+    StoreApiRequest.addToCart(userContextToken).then((res) => {
+      let cartDataTemp = res.lineItems;
+      cartDataTemp = cartDataTemp.map((val) => {
+        return new orderItem({
+          id: val.referencedId,
+          quantity: val.quantity,
+        }).makeObj();
+      });
 
-      StoreApiRequest.addToCart(userContextToken).then((res)=>{
-
-        console.log(res)
-        let cartDataTemp = res.lineItems
-        cartDataTemp = cartDataTemp.map((val)=>{
-          /* console.log('Indevidaul Catr Items', val); */
-
-          return new orderItem({id:val.referencedId, quantity:val.quantity}).makeObj();
-
-
-          return {
-            referencedId: val.referencedId,
-            quantity: val.quantity,
-            type: val.type,
-          };
-        })
-
-        /* console.log('Transformed Data', cartDataTemp) */
-
-        
-        /* TODO: Merge Shoppingcart data back into Logged In Shopping Cart */
-        StoreApiRequest.loginUser(loginForm)
-          .then((res) => {
-            /* NOTE: Adds user Context to Store */
-            setUserContextToken(res.data.contextToken);
-            popUpSwitch();
-            setLoginForm((prev) => ({
-              ...prev,
-              password: "",
-            }));
-            console.info(res);
-            StoreApiRequest.addToCart(res.data.contextToken, cartDataTemp).then(
-              (res) => {
-                console.log(res);
-              }
-            );
-            /* NOTE: Dev Helper functions */
-            /* devApiHelper
+      StoreApiRequest.loginUser(loginForm)
+        .then((res) => {
+          /* NOTE: Adds user Context to Store */
+          setUserContextToken(res.data.contextToken);
+          popUpSwitch();
+          setLoginForm((prev) => ({
+            ...prev,
+            password: "",
+          }));
+          StoreApiRequest.addToCart(res.data.contextToken, cartDataTemp);
+          /* NOTE: Dev Helper functions */
+          /* devApiHelper
               .loginCheck(res.data.contextToken)
               .then((res) => {
                 console.info("User signed in:", res);
                 StoreApiRequest.addToCart(userContextToken, cartDataTemp).then((res)=>{console.log(res)})
               }); */
-          })
-          .catch((e) => {
-            console.error(e);
-          });
-
-      })
-
+        })
+        .catch((e) => {
+          console.error(e);
+        });
+    });
   }
 
   return (
@@ -140,5 +121,3 @@ export default function LoginPopUp() {
     </div>
   );
 }
-
-
