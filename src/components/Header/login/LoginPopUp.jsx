@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import './LoginPopUp.scss'
 
-import StoreApiRequest, {devApiHelper} from '../../../helper/shopware api/apiHelper';
+import StoreApiRequest, {devApiHelper, orderItem} from '../../../helper/shopware api/apiHelper';
 import useUIStore from '../../../store/store';
 
 export default function LoginPopUp() {
@@ -62,11 +62,19 @@ export default function LoginPopUp() {
         console.log(res)
         let cartDataTemp = res.lineItems
         cartDataTemp = cartDataTemp.map((val)=>{
-          console.log('Indevidaul Catr Items', val);
-          return {id: val.id, quantity: val.quantity};
+          /* console.log('Indevidaul Catr Items', val); */
+
+          return new orderItem({id:val.referencedId, quantity:val.quantity}).makeObj();
+
+
+          return {
+            referencedId: val.referencedId,
+            quantity: val.quantity,
+            type: val.type,
+          };
         })
 
-        console.log('Transformed Data', cartDataTemp)
+        /* console.log('Transformed Data', cartDataTemp) */
 
         
         /* TODO: Merge Shoppingcart data back into Logged In Shopping Cart */
@@ -80,14 +88,18 @@ export default function LoginPopUp() {
               password: "",
             }));
             console.info(res);
-    
+            StoreApiRequest.addToCart(res.data.contextToken, cartDataTemp).then(
+              (res) => {
+                console.log(res);
+              }
+            );
             /* NOTE: Dev Helper functions */
-            devApiHelper
+            /* devApiHelper
               .loginCheck(res.data.contextToken)
               .then((res) => {
                 console.info("User signed in:", res);
-                StoreApiRequest.addToCart(userContextToken )
-              });
+                StoreApiRequest.addToCart(userContextToken, cartDataTemp).then((res)=>{console.log(res)})
+              }); */
           })
           .catch((e) => {
             console.error(e);

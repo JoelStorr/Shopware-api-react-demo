@@ -137,9 +137,14 @@ export default class StoreApiRequest {
     });
   }
 
-  static async addToCart(token, productID=null){
+  static async addToCart(token=null, productList=[]){
 
-    if(productID === null){
+    if(token == null){
+      console.error('No valid Context Token was submitted');
+      return;
+    }
+
+    if(productList.length === 0){
       return axios({
         method: "post",
         url: `${shopwareDomain}checkout/cart/line-item`,
@@ -154,12 +159,7 @@ export default class StoreApiRequest {
         url: `${shopwareDomain}checkout/cart/line-item`,
         headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
         data: {
-          items: [
-            {
-              type: "product",
-              referencedId: productID,
-            },
-          ],
+          items: productList,
         },
       }).then((res) => {
         return res.data;
@@ -173,9 +173,7 @@ export default class StoreApiRequest {
 
 export class devApiHelper{
   static async loginCheck(token){
-
-   
-      
+ 
       return axios({
         method: "get",
         url: `${shopwareDomain}account/customer`,
@@ -186,7 +184,24 @@ export class devApiHelper{
       }).catch(e=>{return e.response.data.errors[0]["status"];});
     
 
+  }
+}
 
-    
+
+export class orderItem {
+  
+
+  constructor({type='product', id=null, quantity=null}) {
+    this.type = type;
+    this.referencedId = id;
+    this.quantity = quantity;
+  }
+
+  makeObj() {
+    return {
+      type: this.type,
+      referencedId: this.referencedId,
+      quantity: this.quantity,
+    };
   }
 }

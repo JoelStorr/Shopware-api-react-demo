@@ -6,7 +6,7 @@ import { useFrame } from "@react-three/fiber";
 import "./ShopDetailOverlay.scss";
 import  useUIStore  from "../../../store/store";
 import { getProductList } from "../../../helper/shopware api/apiProductHelper";
-import StoreApiRequest from "../../../helper/shopware api/apiHelper";
+import StoreApiRequest, {orderItem} from "../../../helper/shopware api/apiHelper";
 
 export default function ShopDetailOverlay() {
 
@@ -147,7 +147,10 @@ export default function ShopDetailOverlay() {
       return;
     }
 
-    StoreApiRequest.addToCart(userContextToken, productID).then(res=>console.log('Add to Cart', res))
+    let orderElement = new orderItem({id: productID, quantity: 1}).makeObj();
+    console.log('Oder Data Check', [orderElement]);
+
+    StoreApiRequest.addToCart(userContextToken, [orderElement] ).then(res=>console.log('Add to Cart', res))
   }
 
 
