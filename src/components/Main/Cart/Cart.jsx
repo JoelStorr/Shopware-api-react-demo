@@ -20,6 +20,7 @@ export default function Cart(props) {
 
     function onGoToCheckout(){
       props.setCartShown((prev) => !prev);
+      props.setCheckoutShown((prev)=>!prev);
       /* TODO: Write Checkout Logic */
     }
 
@@ -48,7 +49,7 @@ export default function Cart(props) {
             ))}
           </ul>
         )}
-        <button onClick={() => {}}>Check out</button>
+        <button onClick={onGoToCheckout}>Check out</button>
         <button onClick={() => props.setCartShown((prev) => !prev)}>
           Close
         </button>

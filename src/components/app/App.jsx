@@ -14,6 +14,7 @@ import BasePopUp from '../Main/PopUps/BasePopUp';
 import ShopDetailOverlay from '../Main/Overlays/ShopDetailOverlay';
 import CartButton from '../Main/Cart/CartButton';
 import Cart from '../Main/Cart/Cart';
+import CheckoutPopUp from '../Main/CheckOut/CheckoutPopUp';
 
 
 /* NOTE: API Helper */
@@ -30,7 +31,9 @@ function App() {
   const [popUpShown, setPopUpShown] = useState(null);
   const [cartShown, setCartShown] = useState(false);
   const [userIsLoggedIn, setUserIsLogedIn] = useState(false);
-  const [userData, setUserData] = useState(null)
+  const [userData, setUserData] = useState(null);
+
+  const [checkouShown, setCheckoutShown] = useState(false);
   
   const setUserContextToken = useUIStore((state) => state.setUserContextToken);
   
@@ -76,7 +79,7 @@ function App() {
    /* NOTE: Dev Helper */
    /* useEffect(()=>{console.log('PopUp Shown', popUpShown)},[popUpShown]) */
 
-   
+
  
 
 
@@ -89,8 +92,8 @@ function App() {
       <ShopDetailOverlay />
       <CartButton setCartShown={setCartShown} />
       {popUpShown && <BasePopUp />}
-      {cartShown && <Cart setCartShown={setCartShown} userIsLoggedIn={userIsLoggedIn} />}
-
+      {cartShown && <Cart setCartShown={setCartShown} userIsLoggedIn={userIsLoggedIn} setCheckoutShown={setCheckoutShown} />}
+      {checkouShown && <CheckoutPopUp />}
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>
