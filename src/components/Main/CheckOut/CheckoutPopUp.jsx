@@ -44,14 +44,15 @@ export default function CheckoutPopUp() {
           <div className="items">
             <h1>CheckOut</h1>
             <ul>
-              {cartData.map((val) => (
+            
+              {cartData.length != 0 ?  cartData.map((val) => (
                 <li key={val.id}>
                 
                   {val.label}
                 
                 <button onClick={()=>onRemoveFromCart(val.id)}>X</button>
                 </li>
-              ))}
+              )) : (<p>You have no Cart Items</p>)}
             </ul>
           </div>
           <div>
