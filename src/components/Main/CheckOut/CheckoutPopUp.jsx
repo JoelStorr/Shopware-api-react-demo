@@ -27,6 +27,15 @@ export default function CheckoutPopUp() {
     function onPayPalSubmit(){}
     function onClaranaSubmit(){}
 
+    function onRemoveFromCart(id){
+      console.log('---------------- ID -------------------')
+      console.log(id)
+      StoreApiRequest.removeFromCart(userContextToken, [id]).then((res)=> setCartData(res.lineItems));
+    }
+
+
+
+
 
   return (
     <div className="checkout-popup">
@@ -36,7 +45,12 @@ export default function CheckoutPopUp() {
             <h1>CheckOut</h1>
             <ul>
               {cartData.map((val) => (
-                <li key={val.id}>{val.label}</li>
+                <li key={val.id}>
+                
+                  {val.label}
+                
+                <button onClick={()=>onRemoveFromCart(val.id)}>X</button>
+                </li>
               ))}
             </ul>
           </div>
@@ -56,7 +70,7 @@ export default function CheckoutPopUp() {
                 {paymentMethod == "credit-card" && (
                   <label htmlFor="cardHolder">
                     CardHodler
-                    <input type="text" id="cardHolder" />
+                    <input type="text" id="cardHolder" disabled={true} />
                   </label>
                 )}
                 {paymentMethod == "paypal" && (
