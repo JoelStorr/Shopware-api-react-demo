@@ -4,6 +4,9 @@ import './Cart.scss'
 import StoreApiRequest from '../../../helper/shopware api/apiHelper';
 import useUIStore from '../../../store/store';
 
+import Login from '../../Header/login/Login';
+import Register from '../../Header/register/Register';
+
 export default function Cart(props) {
 
     const [cartData, setCartData] = useState([]);
@@ -41,18 +44,26 @@ export default function Cart(props) {
           <ul>
             {cartData.map((val) => (
               <li ke={val.id}>
-                <p>
-                  {val.label}
-                </p>
-                <button onClick={()=>onRemove(val.id)}>X</button>
+                <p>{val.label}</p>
+                <button onClick={() => onRemove(val.id)}>X</button>
               </li>
             ))}
           </ul>
         )}
-        <button onClick={onGoToCheckout}>Check out</button>
-        <button onClick={() => props.setCartShown((prev) => !prev)}>
-          Close
-        </button>
+
+        {props.userIsLoggedIn ? (
+          <>
+            <button onClick={onGoToCheckout}>Check out</button>
+            <button onClick={() => props.setCartShown((prev) => !prev)}>
+              Close
+            </button>
+          </>
+        ) : (
+          <div onClick={() => props.setCartShown((prev) => !prev)}>
+            <Login />
+            <Register />
+          </div>
+        )}
       </div>
     </>
   );

@@ -99,7 +99,12 @@ function App() {
           setCheckoutShown={setCheckoutShown}
         />
       )}
-      {checkouShown && <CheckoutPopUp setCheckoutShown={setCheckoutShown} />}
+      {checkouShown && (
+        <CheckoutPopUp
+          setCheckoutShown={setCheckoutShown}
+          userIsLoggedIn={userIsLoggedIn}
+        />
+      )}
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>
