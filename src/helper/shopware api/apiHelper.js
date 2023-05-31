@@ -3,7 +3,6 @@ import axios from "axios";
 const shopwareDomain = "http://localhost/store-api/";
 const shopwareKey = "SWSCWDHDQLQ4UM9YZZZIEUXLBQ";
 
-
 export default class StoreApiRequest {
   static async getCategories() {
     return axios({
@@ -137,23 +136,21 @@ export default class StoreApiRequest {
     });
   }
 
-  static async addToCart(token=null, productList=[]){
-
-    if(token == null){
-      console.error('No valid Context Token was submitted');
+  static async addToCart(token = null, productList = []) {
+    if (token == null) {
+      console.error("No valid Context Token was submitted");
       return;
     }
 
-    if(productList.length === 0){
+    if (productList.length === 0) {
       return axios({
         method: "post",
         url: `${shopwareDomain}checkout/cart/line-item`,
         headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
-        
       }).then((res) => {
         return res.data;
       });
-    }else{
+    } else {
       return axios({
         method: "post",
         url: `${shopwareDomain}checkout/cart/line-item`,
@@ -165,33 +162,46 @@ export default class StoreApiRequest {
         return res.data;
       });
     }
+  }
+
+  static async removeFromCart(token = null, idList = []) {
+    if (token == null) {
+      console.error("No valid Context Token was submitted");
+      return;
     }
 
-
-}
-
-
-export class devApiHelper{
-  static async loginCheck(token){
- 
-      return axios({
-        method: "get",
-        url: `${shopwareDomain}account/customer`,
-        headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
-      }).then((res) => {
-        /* console.log(res.data); */
-        return res.data;
-      }).catch(e=>{return e.response.data.errors[0]["status"];});
-    
-
+    return axios({
+      method: "delete",
+      url: `${shopwareDomain}checkout/cart/line-item`,
+      headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+      data: {
+        ids: idList,
+      },
+    }).then((res) => {
+      return res.data;
+    });
   }
 }
 
+export class devApiHelper {
+  static async loginCheck(token) {
+    return axios({
+      method: "get",
+      url: `${shopwareDomain}account/customer`,
+      headers: { "sw-access-key": shopwareKey, "sw-context-token": token },
+    })
+      .then((res) => {
+        /* console.log(res.data); */
+        return res.data;
+      })
+      .catch((e) => {
+        return e.response.data.errors[0]["status"];
+      });
+  }
+}
 
 export class orderItem {
-  
-
-  constructor({type='product', id=null, quantity=null}) {
+  constructor({ type = "product", id = null, quantity = null }) {
     this.type = type;
     this.referencedId = id;
     this.quantity = quantity;
