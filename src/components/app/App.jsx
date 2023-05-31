@@ -88,12 +88,18 @@ function App() {
   //NOTE: Base Camera Values -> [3, 2, 3]
   return (
     <>
-      <MainHeader  userIsLoggedIn={userIsLoggedIn} userData={userData}/>
+      <MainHeader userIsLoggedIn={userIsLoggedIn} userData={userData} />
       <ShopDetailOverlay />
       <CartButton setCartShown={setCartShown} />
       {popUpShown && <BasePopUp />}
-      {cartShown && <Cart setCartShown={setCartShown} userIsLoggedIn={userIsLoggedIn} setCheckoutShown={setCheckoutShown} />}
-      {checkouShown && <CheckoutPopUp />}
+      {cartShown && (
+        <Cart
+          setCartShown={setCartShown}
+          userIsLoggedIn={userIsLoggedIn}
+          setCheckoutShown={setCheckoutShown}
+        />
+      )}
+      {checkouShown && <CheckoutPopUp setCheckoutShown={setCheckoutShown} />}
       {/* 3D Render Element */}
       <div className="renderBox">
         <Canvas camera={{ position: [3, 2, 3], rotation: [0, 1, 0] }}>

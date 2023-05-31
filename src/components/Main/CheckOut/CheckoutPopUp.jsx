@@ -5,7 +5,7 @@ import StoreApiRequest from '../../../helper/shopware api/apiHelper';
 import useUIStore from '../../../store/store';
 
 
-export default function CheckoutPopUp() {
+export default function CheckoutPopUp(props) {
 
     const [cartData, setCartData] = useState([])
     const [paymentMethod, setPaymentMethod] = useState("credit-card");
@@ -38,71 +38,81 @@ export default function CheckoutPopUp() {
 
 
   return (
-    <div className="checkout-popup">
-      {!paymentConfirmed && (
-        <div className="checkout">
-          <div className="items">
-            <h1>CheckOut</h1>
-            <ul>
-            
-              {cartData.length != 0 ?  cartData.map((val) => (
-                <li key={val.id}>
-                
-                  {val.label}
-                
-                <button onClick={()=>onRemoveFromCart(val.id)}>X</button>
-                </li>
-              )) : (<p>You have no Cart Items</p>)}
-            </ul>
-          </div>
-          <div>
-            <h1>Payment Detail</h1>
-            <form onSubmit={(e)=>onCreditCartSubmit()}>
-              <label>
-                Payment Method:
-                <select onChange={(e) => setPaymentMethod(e.target.value)}>
-                  <option value="credit-card" selected>
-                    Credit Card
-                  </option>
-                  <option value="paypal">PayPal</option>
-                  <option value="clarana">Clarana</option>
-                </select>
-                <br />
-                {paymentMethod == "credit-card" && (
-                  <label htmlFor="cardHolder">
-                    CardHodler
-                    <input type="text" id="cardHolder" disabled={true} />
-                  </label>
-                )}
-                {paymentMethod == "paypal" && (
-                  <a
-                    onClick={onPayPalSubmit}
-                    href={null}
-                    style={{ cursor: "pointer" }}
-                  >
-                    PayPal{" "}
-                  </a>
-                )}
-                {paymentMethod == "clarana" && (
-                  <a
-                    onClick={onClaranaSubmit}
-                    href={null}
-                    style={{ cursor: "pointer" }}
-                  >
-                    Clarana
-                  </a>
-                )}
-              </label>
-            </form>
-          </div>
-        </div>
-      )}
+    <>
+      <div
+        className="checkout-bg"
+        onClick={() => props.setCheckoutShown((prev) => !prev)}
+      ></div>
+      <div className="checkout-popup">
+        {!paymentConfirmed && (
+          <div className="checkout">
+            <div className="items">
+              <h1>CheckOut</h1>
+              <ul>
+                {cartData.length != 0 ? (
+                  cartData.map((val) => (
+                    <li key={val.id}>
+                      {val.label}
 
-      {paymentConfirmed && (
-        <div>
-          <h1>Thank you for your Order</h1>
-        </div>
-      )}
-    </div>
+                      <button onClick={() => onRemoveFromCart(val.id)}>
+                        X
+                      </button>
+                    </li>
+                  ))
+                ) : (
+                  <p>You have no Cart Items</p>
+                )}
+              </ul>
+            </div>
+            <div>
+              <h1>Payment Detail</h1>
+              <form onSubmit={(e) => onCreditCartSubmit()}>
+                <label>
+                  Payment Method:
+                  <select onChange={(e) => setPaymentMethod(e.target.value)}>
+                    <option value="credit-card" selected>
+                      Credit Card
+                    </option>
+                    <option value="paypal">PayPal</option>
+                    <option value="clarana">Clarana</option>
+                  </select>
+                  <br />
+                  {paymentMethod == "credit-card" && (
+                    <label htmlFor="cardHolder">
+                      CardHodler
+                      <input type="text" id="cardHolder" disabled={true} />
+                    </label>
+                  )}
+                  {paymentMethod == "paypal" && (
+                    <a
+                      onClick={onPayPalSubmit}
+                      href={null}
+                      style={{ cursor: "pointer" }}
+                    >
+                      PayPal{" "}
+                    </a>
+                  )}
+                  {paymentMethod == "clarana" && (
+                    <a
+                      onClick={onClaranaSubmit}
+                      href={null}
+                      style={{ cursor: "pointer" }}
+                    >
+                      Clarana
+                    </a>
+                  )}
+                </label>
+              </form>
+            </div>
+          </div>
+        )}
+
+        {paymentConfirmed && (
+          <div>
+            <h1>Thank you for your Order</h1>
+          </div>
+        )}
+      </div>
+    </>
   );
 }
