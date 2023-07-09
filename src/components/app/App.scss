@@ -35,7 +35,7 @@
 
 .top-spacer{
   height: 80vh;
- /*  background-color: rgba(226, 115, 10, 0.3); */
+  /* background-color: rgba(226, 115, 10, 0.3); */
   pointer-events: none;
   z-index: 2;
 }
@@ -54,3 +54,4 @@ body::-webkit-scrollbar-thumb {
   background: linear-gradient(45deg, rgb(188, 188, 188), rgb(91, 91, 91));
   border-radius: 2em;
 }
+
