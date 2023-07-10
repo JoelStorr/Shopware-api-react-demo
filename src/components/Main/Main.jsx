@@ -229,24 +229,21 @@ export default function Main(props) {
   return (
     <group {...props} dispose={null}>
       <pointLight position={[-2, 4, 0]} intensity={1} />
-
       <pointLight position={[-2, 0, 0]} intensity={0.2} />
-
       <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
         <GizmoViewport
           axisColors={["red", "green", "blue"]}
           labelColor="black"
         />
       </GizmoHelper>
-
       {/* NOTE: Paset generated Mesh elements */}
-
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Middle_Block.geometry}
         material={materials["Furniture Base"]}
-        position={[0, 0.5, 0]}
+        position={[-0.632, 0.5, 0]}
+        scale={[0.687, 1, 1]}
       />
       <mesh
         castShadow
@@ -283,40 +280,24 @@ export default function Main(props) {
         receiveShadow
         geometry={nodes.Cinque.geometry}
         material={materials["Furniture Base"]}
-        position={[-1.272, 0.747, -0.003]}
-        scale={0.414}
+        position={[-1.513, 0.747, -0.003]}
+        scale={[0.278, 0.414, 0.414]}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Stove.geometry}
         material={materials["Furniture Base"]}
-        position={[-0.269, 1.025, -1.472]}
+        position={[-1, 1.025, -1.472]}
         scale={[0.654, 0.047, 0.391]}
       />
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.polySurface171.geometry}
-        material={materials.M_UE4Man_Body}
-        position={[-2.289, 0.934, 0.11]}
-        rotation={[Math.PI / 2, 0, -1.514]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.polySurface171001.geometry}
-        material={materials["M_UE4Man_Body.001"]}
-        position={[-2.189, 0.934, -3.319]}
-        rotation={[Math.PI / 2, 0, -3.133]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
-        geometry={nodes.polySurface171002.geometry}
-        material={materials["M_UE4Man_Body.001"]}
-        position={[-3.22, 0.934, 2.612]}
-        rotation={[Math.PI / 2, 0, 1.536]}
+        geometry={nodes.wood_panels.geometry}
+        material={nodes.wood_panels.material}
+        position={[0.072, 0.761, 1.935]}
+        scale={[0.015, 0.766, 0.065]}
       />
 
       <group ref={focetGroupe}>
@@ -325,7 +306,7 @@ export default function Main(props) {
           receiveShadow
           geometry={nodes.Focet_001.geometry}
           material={materials.Product}
-          position={[-0.853, 1.295, -0.065]}
+          position={[-1.232, 1.295, -0.065]}
           scale={[0.058, 0.305, 0.058]}
         />
         {/* Focets */}
@@ -336,7 +317,7 @@ export default function Main(props) {
               receiveShadow
               geometry={nodes.Focet_002.geometry}
               material={materials.Product}
-              position={[-0.853, 1.295, 0.426]}
+              position={[-1.232, 1.295, 0.426]}
               scale={[0.058, 0.305, 0.058]}
             />
             <mesh
@@ -344,13 +325,12 @@ export default function Main(props) {
               receiveShadow
               geometry={nodes.Focet_003.geometry}
               material={materials.Product}
-              position={[-0.853, 1.295, 0.956]}
+              position={[-1.232, 1.295, 0.956]}
               scale={[0.058, 0.305, 0.058]}
             />
           </>
         )}
       </group>
-
       <group ref={towlHolder}>
         <mesh
           castShadow
