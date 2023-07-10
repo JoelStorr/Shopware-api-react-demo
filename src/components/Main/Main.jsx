@@ -228,9 +228,9 @@ export default function Main(props) {
 
   return (
     <group {...props} dispose={null}>
-      <pointLight position={[-2, 4, 0]} intensity={0.5} />
+      <pointLight position={[-2, 4, 0]} intensity={1} />
 
-      <pointLight position={[-2, 0, 0]} intensity={0.5} />
+      <pointLight position={[-2, 0, 0]} intensity={0.2} />
 
       <GizmoHelper alignment="bottom-right" margin={[80, 80]}>
         <GizmoViewport
@@ -240,6 +240,7 @@ export default function Main(props) {
       </GizmoHelper>
 
       {/* NOTE: Paset generated Mesh elements */}
+
       <mesh
         castShadow
         receiveShadow
@@ -252,7 +253,7 @@ export default function Main(props) {
         receiveShadow
         geometry={nodes.Fridge.geometry}
         material={materials["Furniture Base"]}
-        position={[-3.5, 0.01, 2.01]}
+        position={[-3.5, 0.005, 2.012]}
       />
       <mesh
         castShadow
@@ -267,92 +268,120 @@ export default function Main(props) {
         geometry={nodes.Back_001.geometry}
         material={materials["Furniture Base"]}
         position={[1, 0, -3.5]}
-        rotation={[0, -1.56, 0]}
+        rotation={[0, -1.564, 0]}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Back_002.geometry}
         material={materials["Furniture Base"]}
-        position={[0.14, 1.42, -5]}
-        rotation={[0, -1.56, 0]}
+        position={[0.141, 1.42, -5.003]}
+        rotation={[0, -1.564, 0]}
       />
       <mesh
         castShadow
         receiveShadow
         geometry={nodes.Cinque.geometry}
         material={materials["Furniture Base"]}
-        position={[-1.27, 0.75, 0]}
-        scale={0.41}
+        position={[-1.272, 0.747, -0.003]}
+        scale={0.414}
       />
-      <group ref={focetGroupe}>
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.Cube.geometry}
-        material={materials.Product}
-        position={[-0.85, 1.29, -0.06]}
-        scale={[0.06, 0.3, 0.06]}
+        geometry={nodes.Stove.geometry}
+        material={materials["Furniture Base"]}
+        position={[-0.269, 1.025, -1.472]}
+        scale={[0.654, 0.047, 0.391]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.polySurface171.geometry}
+        material={materials.M_UE4Man_Body}
+        position={[-2.289, 0.934, 0.11]}
+        rotation={[Math.PI / 2, 0, -1.514]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.polySurface171001.geometry}
+        material={materials["M_UE4Man_Body.001"]}
+        position={[-2.189, 0.934, -3.319]}
+        rotation={[Math.PI / 2, 0, -3.133]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.polySurface171002.geometry}
+        material={materials["M_UE4Man_Body.001"]}
+        position={[-3.22, 0.934, 2.612]}
+        rotation={[Math.PI / 2, 0, 1.536]}
       />
 
-      {/* Focets */}
-     {tlIsActive === 'tl1' && (  
-        <>
+      <group ref={focetGroupe}>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube001.geometry}
+          geometry={nodes.Focet_001.geometry}
           material={materials.Product}
-          position={[-0.85, 1.29, 0.43]}
-          scale={[0.06, 0.3, 0.06]}
+          position={[-0.853, 1.295, -0.065]}
+          scale={[0.058, 0.305, 0.058]}
         />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.Cube002.geometry}
-          material={materials.Product}
-          position={[-0.85, 1.29, 0.96]}
-          scale={[0.06, 0.3, 0.06]}
-        /> 
-        </>
-      
-      )}
+        {/* Focets */}
+        {tlIsActive === "tl1" && (
+          <>
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Focet_002.geometry}
+              material={materials.Product}
+              position={[-0.853, 1.295, 0.426]}
+              scale={[0.058, 0.305, 0.058]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.Focet_003.geometry}
+              material={materials.Product}
+              position={[-0.853, 1.295, 0.956]}
+              scale={[0.058, 0.305, 0.058]}
+            />
+          </>
+        )}
       </group>
 
       <group ref={towlHolder}>
         <mesh
           castShadow
           receiveShadow
-          geometry={nodes.Cube003.geometry}
+          geometry={nodes.hanger_001.geometry}
           material={materials.Product}
-          position={[-4.51, 1.33, -0.32]}
-          scale={[-0.05, -0.05, -0.36]}
+          position={[-4.514, 1.326, -0.323]}
+          scale={[-0.052, -0.052, -0.356]}
         />
-
         {/* Handtuchhalter */}
-        { tlIsActive === 'tl2' && (
+        {tlIsActive === "tl2" && (
           <>
             <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube004.geometry}
-            material={materials.Product}
-            position={[-4.51, 1.33, -1.17]}
-            scale={[-0.05, -0.05, -0.36]}
-          />
-          <mesh
-            castShadow
-            receiveShadow
-            geometry={nodes.Cube005.geometry}
-            material={materials.Product}
-            position={[-4.51, 1.33, -1.98]}
-            scale={[-0.05, -0.05, -0.36]}
-          /> 
-
-        </>
-      )}
+              castShadow
+              receiveShadow
+              geometry={nodes.hanger_002.geometry}
+              material={materials.Product}
+              position={[-4.514, 1.326, -1.168]}
+              scale={[-0.052, -0.052, -0.356]}
+            />
+            <mesh
+              castShadow
+              receiveShadow
+              geometry={nodes.hanger_003.geometry}
+              material={materials.Product}
+              position={[-4.514, 1.326, -1.983]}
+              scale={[-0.052, -0.052, -0.356]}
+            />
+          </>
+        )}
       </group>
-
     </group>
   );
 }
