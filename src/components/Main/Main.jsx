@@ -262,17 +262,9 @@ export default function Main(props) {
       <mesh
         castShadow
         receiveShadow
-        geometry={nodes.Back_001.geometry}
-        material={materials["Furniture Base"]}
-        position={[1, 0, -3.5]}
-        rotation={[0, -1.564, 0]}
-      />
-      <mesh
-        castShadow
-        receiveShadow
         geometry={nodes.Back_002.geometry}
         material={materials["Furniture Base"]}
-        position={[0.141, 1.42, -5.003]}
+        position={[0.822, 1.42, -5.008]}
         rotation={[0, -1.564, 0]}
       />
       <mesh
@@ -298,6 +290,14 @@ export default function Main(props) {
         material={nodes.wood_panels.material}
         position={[0.072, 0.761, 1.935]}
         scale={[0.015, 0.766, 0.065]}
+      />
+      <mesh
+        castShadow
+        receiveShadow
+        geometry={nodes.Back_001.geometry}
+        material={materials["Furniture Base"]}
+        position={[0.496, 0, -3.454]}
+        rotation={[0, -Math.PI / 2, 0]}
       />
 
       <group ref={focetGroupe}>
